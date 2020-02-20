@@ -1,8 +1,14 @@
 import { NgModule } from '@angular/core';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireAuthModule } from '@angular/fire/auth';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
+import { ServiceModule } from 'src/services/service.module';
+import { HttpClientModule } from '@angular/common/http';
 
+import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
 
 // routes
 export const ROUTES: Routes = [
@@ -21,7 +27,13 @@ export const ROUTES: Routes = [
     AppComponent
   ],
   imports: [
-    BrowserModule, RouterModule.forRoot(ROUTES)
+    BrowserModule,
+    ServiceModule,
+    HttpClientModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule, // imports firebase/firestore, only needed for database features
+    AngularFireAuthModule, // imports firebase/auth, only needed for auth features,
+    RouterModule.forRoot(ROUTES)
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,1 +1,65 @@
-<p>register works!</p>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 mt-5 d-none d-md-block">
+            <img src="assets/images/UNOLO-Adv.jpg" alt="logo" style="width: 100%;" />
+        </div>
+        <div class="col-md-6 mt-5">
+            <a routerLink="/">
+                <img class="company-logo" src="assets/images/logo.png" alt="logo" />
+            </a>
+
+            <div class="text-center my-4" style="font-size: 24px;">REGISTRATION</div>
+            <div class="alert alert-danger" role="alert" *ngIf="errorMessage.length > 0">
+                {{errorMessage}}
+            </div>
+            <div *ngIf="thankyouMessage">
+                <i class="fa fa-thumbs-o-up"></i> Thank you for registration with UNOLO Technology Limited bulk SMS. You can now
+                <a routerLink="/login">
+                    <strong>Login</strong>
+                </a> at our login page.
+            </div>
+            <loading *ngIf="loading"></loading>
+
+            <form *ngIf="!thankyouMessage && !loading" class="mx-md-5" [formGroup]="form" (ngSubmit)="submit()">
+                <div class="form-row mb-4">
+                    <input type="text" class="form-control" placeholder="Name" formControlName="name">
+                    <small class="text-danger" *ngIf="form.controls.name.errors && form.controls.name.touched">
+                        Name required </small>
+                    <input type="text" class="form-control" placeholder="Email" formControlName="email" />
+                    <small class="text-danger" *ngIf=" form.controls.email.errors && form.controls.email.touched">
+                        <div [hidden]="!form.controls['email'].errors.required">
+                            Email required
+                        </div>
+                        <div [hidden]="!form.controls['email'].errors.email">
+                            Invalid email
+                        </div>
+                    </small>
+                    <!-- <input type="password" class="form-control" placeholder="Password" formControlName="password"> -->
+                    <div class="input-group mb-1 mb-sm-0">
+                        <input [type]="showPassword ? 'text' : 'password'" class="form-control" placeholder="Password" formControlName="password">
+                        <div class="input-group-append mt-3">
+                            <button class="btn btn-outline-secondary" type="button" (click)="showPassword = !showPassword">
+                                <i class="fa fa-eye fa-2x" [ngClass]="showPassword?'fa-eye-slash':'fa-eye'"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <small class="text-danger" *ngIf="form.controls.password.errors && form.controls.password.touched">
+                        <div [hidden]="!form.controls['password'].errors.required">
+                            Password required
+                        </div>
+                        <div [hidden]="!form.controls['password'].errors.minlength">
+                            Minimum passwor length required 6
+                        </div>
+                    </small>
+                </div>
+                <button class="btn btn-block btn-success py-2">REGISTER</button>
+            </form>
+
+            <div *ngIf="!thankyouMessage" class="text-center my-3">Already registered?
+                <a routerLink="/login">
+                    <strong>Login</strong>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

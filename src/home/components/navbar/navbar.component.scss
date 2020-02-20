@@ -1,0 +1,13 @@
+@import "~src/styles.scss"; 
+
+
+.navbar{
+    color: $text-primary-color;
+    background: $dark-primary-color;
+    font-weight: bold;
+    border-bottom: 3px solid $accent-color;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.16), 0 2px 10px rgba(0, 0, 0, 0.12);
+  }
+  .nav-link{
+      cursor: pointer;
+  }

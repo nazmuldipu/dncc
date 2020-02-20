@@ -1,1 +1,50 @@
-<p>login works!</p>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 mt-5 d-none d-md-block">
+            <img src="assets/images/UNOLO-Adv.jpg" alt="logo" style="max-width: 100%; max-height: 90vh;" />
+        </div>
+        <div class="col-md-6 mt-5">
+            <a routerLink="/">
+                <img class="company-logo" src="assets/images/logo.png" alt="logo" />
+            </a>
+
+            <div class="text-center my-4" style="font-size: 24px;">ACCOUNT LOGIN</div>
+
+            <div class="alert alert-danger" role="alert" *ngIf="errorMessage.length > 0">
+                {{errorMessage}}
+            </div>
+            <loading *ngIf="loading"></loading>
+
+            <form *ngIf="!loading" class="mx-md-5" [formGroup]="form" (ngSubmit)="submit()">
+                <input type="text" class="form-control" placeholder="User name" formControlName="username" autocomplete="no">
+                <small class="text-danger" *ngIf="form.controls.username.errors && form.controls.username.touched">
+                    Username required </small>
+                <div class="input-group mb-1 mb-sm-0">
+                    <input [type]="showPassword ? 'text' : 'password'" class="form-control" placeholder="Password" formControlName="password">
+                    <div class="input-group-append mt-3">
+                        <button class="btn btn-outline-secondary" type="button" (click)="showPassword = !showPassword">
+                            <i class="fa fa-eye fa-2x" [ngClass]="showPassword?'fa-eye-slash':'fa-eye'"></i>
+                        </button>
+                    </div>
+                </div>
+                <small class="text-danger" *ngIf="form.controls.password.errors && form.controls.password.touched">
+                    <div [hidden]="!form.controls['password'].errors.required">
+                        Password required
+                    </div>
+                    <div [hidden]="!form.controls['password'].errors.minlength">
+                        Minimum passwor length required 6
+                    </div>
+                </small>
+                <button type="submit" class="btn btn-block btn-success py-2 mt-3">SIGN IN</button>
+            </form>
+            <div *ngIf="!loading" class="text-center my-3">Forgot your password ?
+                <a routerLink="/">Reset</a>
+            </div>
+            <div *ngIf="!loading" class="text-center my-3">Not register yet?
+                <a routerLink="/register">
+                    <strong>Register</strong>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

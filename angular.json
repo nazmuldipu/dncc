@@ -67,7 +67,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "dncc:build"
+            "browserTarget": "dncc:build",
+            "port": 3300
           },
           "configurations": {
             "production": {
@@ -122,8 +123,13 @@
               "devServerTarget": "dncc:serve:production"
             }
           }
+        },
+        "deploy": {
+          "builder": "angular-cli-ghpages:deploy",
+          "options": {}
         }
       }
-    }},
+    }
+  },
   "defaultProject": "dncc"
 }
