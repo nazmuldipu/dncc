@@ -1,0 +1,29 @@
+<div class="row">
+    <div class="col-12 shadow-sm">
+        <div class="text-center">
+            <h5 class="h3 mb-3 font-weight-normal">
+                <strong> অঞ্চল/বিভাগ তালিকা</strong>
+            </h5>
+        </div>
+        <table class="table border table-responsive-sm">
+            <thead>
+                <tr>
+                    <th>সিরিয়াল</th>
+                    <th>Name</th>
+                    <th>নাম</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let com of zoneList">
+                    <td>{{com.serialNo}}</td>
+                    <td>{{com.name}}</td>
+                    <td>{{com.nameBd}}</td>
+                    <td>
+                        <a class="btn btn-sm btn-warning raised" (click)="editZone(com.id)">Edit</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

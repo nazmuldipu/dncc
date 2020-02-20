@@ -1,0 +1,12 @@
+<div class="container">
+    <div class="row">
+        <dir class="col-md-6">
+            <loading *ngIf="loadingData"></loading>
+            <zone-list *ngIf="!loadingData" [zoneList]="zoneList" (edit)="onEdit($event)"></zone-list>
+        </dir>
+        <dir class="col-md-6">
+            <loading *ngIf="sendingData"></loading>
+            <zone-form *ngIf="!sendingData" [zone]="zone" (create)="onCreate($event)" (update)="onUpdate($event)" (delete)="onDelete($event)"></zone-form>
+        </dir>
+    </div>
+</div>

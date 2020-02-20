@@ -7,14 +7,16 @@ import { User } from 'src/shared/models/user.model';
   providedIn: 'root'
 })
 export class UserService {
+  serviceUrl = 'users';
+
   constructor(private afs: AngularFirestore) { }
 
   create(user) {
-    return this.afs.collection('users').add(user);
+    return this.afs.collection(this.serviceUrl).add(user);
   }
 
   saveRegisteredUser(uid, name, email, password) {
-    return this.afs.collection('users').doc(uid).set({
+    return this.afs.collection(this.serviceUrl).doc(uid).set({
       name: name,
       email: email,
       password: password,
@@ -23,17 +25,17 @@ export class UserService {
   }
 
   saveUser(uid, user: User) {
-    return this.afs.collection('users').doc(uid).set({
+    return this.afs.collection(this.serviceUrl).doc(uid).set({
       ...user
     });
   }
 
   get(uid) {
-    return this.afs.doc('users/' + uid).valueChanges();
+    return this.afs.doc(this.serviceUrl + '/' + uid).valueChanges();
   }
 
   getAll() {
-    return this.afs.collection('users').snapshotChanges().pipe(
+    return this.afs.collection(this.serviceUrl).snapshotChanges().pipe(
       map(actions => actions.map(a => {
         const data = a.payload.doc.data() as User;
         const id = a.payload.doc.id;
@@ -43,12 +45,12 @@ export class UserService {
 
   update(uid, user: User) {
     delete user["id"]
-    return this.afs.doc('users/' + uid).update({
+    return this.afs.doc(this.serviceUrl + '/' + uid).update({
       ...user
     });
   }
 
   delete(uid) {
-    return this.afs.doc('users/' + uid).delete();
+    return this.afs.doc(this.serviceUrl + '/' + uid).delete();
   }
 }
