@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Zone } from 'src/shared/models/zone.model';
 import { AuthService } from 'src/services/auth.service';
 import { ZoneService } from 'src/services/zone.service';
+import { UtilService } from 'src/services/util.service';
 
 @Component({
   selector: 'app-zone',
@@ -16,7 +17,7 @@ export class ZoneComponent implements OnInit {
   sendingData = false;
   errorMessage = "";
 
-  constructor(private auth: AuthService, private zoneService: ZoneService) { }
+  constructor(private utilService: UtilService, private zoneService: ZoneService) { }
 
   ngOnInit() {
     this.getAllZone();
@@ -27,11 +28,13 @@ export class ZoneComponent implements OnInit {
     await this.zoneService.zones$.subscribe(data => {
       if (data.length) {
         this.zoneList = data;
+        this.zoneList.sort(this.utilService.dynamicSortObject('serialNo'));
         this.loadingData = false;
       } else {
         this.zoneService.getAll()
           .subscribe(data => {
             this.zoneList = data;
+            this.zoneList.sort(this.utilService.dynamicSortObject('serialNo'));
             this.loadingData = false;
           });
       }

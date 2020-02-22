@@ -1,0 +1,13 @@
+<div class="container">
+    <div class="row">
+        <dir class="col-md-6">
+            <loading *ngIf="loadingData"></loading>
+            <fiscal-year-list *ngIf="!loadingData" [fiscalYearList]="fiscalYearList" (edit)="onEdit($event)"></fiscal-year-list>
+        </dir>
+        <dir class="col-md-6">
+            <loading *ngIf="sendingData"></loading>
+            <fiscal-year-form *ngIf="!sendingData" [fiscalYear]="fiscalYear" [fiscalYearList]="fiscalYearList" (create)="onCreate($event)"
+                (update)="onUpdate($event)" (delete)="onDelete($event)"></fiscal-year-form>
+        </dir>
+    </div>
+</div>

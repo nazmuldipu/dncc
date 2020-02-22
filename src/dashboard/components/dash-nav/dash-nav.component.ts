@@ -27,9 +27,9 @@ export class DashNavComponent implements OnInit {
           .subscribe(data => {
             this.appUser = data;
             this.auth._userSource.next(this.appUser);
-            let companyId = this.appUser.companyId;
+            // let companyId = this.appUser.companyId;
             if (this.appUser.companyId) {
-              localStorage.setItem('companyId', companyId);
+              // localStorage.setItem('companyId', companyId);
               // this.groupService.getAndStoreAll(companyId);
               // this.peopleService.getAndStoreAll(companyId);
               // this.companyService.getAndStore(companyId);

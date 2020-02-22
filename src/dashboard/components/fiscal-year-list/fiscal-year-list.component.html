@@ -1,0 +1,31 @@
+<div class="row">
+    <div class="col-12 shadow-sm">
+        <div class="text-center">
+            <h5 class="h3 mb-3 font-weight-normal">
+                <strong> অর্থবছরের তালিকা</strong>
+            </h5>
+        </div>
+        <table class="table border table-responsive-sm">
+            <thead>
+                <tr>
+                    <th>সিরিয়াল</th>
+                    <th>পূর্ববর্তী অর্থবছরের নাম</th>
+                    <th>নাম</th>
+                    <th>পরবর্তী অর্থবছরের নাম</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let com of fiscalYearList">
+                    <td>{{com.serialNo}}</td>
+                    <td>{{getFiscalYearName(com.prevId)}}</td>
+                    <th>{{com.name}}</th>
+                    <td>{{getFiscalYearName(com.nextId)}}</td>
+                    <td>
+                        <a class="btn btn-sm btn-warning raised" (click)="editFiscalYear(com.id)">Edit</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
