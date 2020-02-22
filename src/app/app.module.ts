@@ -5,7 +5,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
 import { ServiceModule } from 'src/services/service.module';
 import { HttpClientModule } from '@angular/common/http';
-
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from '../environments/environment';
 import { AppComponent } from './app.component';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
@@ -30,6 +30,7 @@ export const ROUTES: Routes = [
     BrowserModule,
     ServiceModule,
     HttpClientModule,
+    NgbModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule, // imports firebase/firestore, only needed for database features
     AngularFireAuthModule, // imports firebase/auth, only needed for auth features,

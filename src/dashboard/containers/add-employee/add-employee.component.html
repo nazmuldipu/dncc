@@ -1,0 +1,9 @@
+<div class="container">
+    <div class="row">
+        <dir class="col-md-12">
+            <loading *ngIf="sendingData"></loading>
+            <employee-form *ngIf="!sendingData" [employee]="employee" [zoneList]="zoneList" (create)="onCreate($event)" (update)="onUpdate($event)"
+                (delete)="onDelete($event)"></employee-form>
+        </dir>
+    </div>
+</div>

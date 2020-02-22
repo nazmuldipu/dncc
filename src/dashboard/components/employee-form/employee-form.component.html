@@ -1,0 +1,126 @@
+<div class="row pl-4">
+    <div class="col-12 shadow-sm">
+        <div class="text-center">
+            <h5 class="h3 mb-3 font-weight-normal">
+                <strong> কর্মকর্তা সংযোজন</strong>
+            </h5>
+            <div class="alert alert-danger" *ngIf="errorMessage.length>0">
+                {{errorMessage}}
+            </div>
+        </div>
+        <form [formGroup]="form" (ngSubmit)="submit()" (mouseleave)="mouseoverShifting = false">
+            <div class="form-row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="empId">কর্মকর্তা আইডি*</label>
+                        <input type="text" class="form-control" id="empId" placeholder="কর্মকর্তা আইডি" formControlName="empId">
+                        <small class="text-danger" *ngIf="form.controls.empId.errors && form.controls.empId.touched">
+                            কর্মকর্তা আইডি প্রয়োজন
+                        </small>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="zone">অঞ্চল/বিভাগ*</label>
+                        <select class="form-control" id="zone" formControlName="zone">
+                            <option value=""> অঞ্চল/বিভাগ সিলেক্ট করুন </option>
+                            <option *ngFor="let zn of zoneList" [value]="zn.nameBd">
+                                {{ zn.nameBd }}
+                            </option>
+                        </select>
+                        <small class="text-danger" *ngIf="form.controls.zone.errors && form.controls.zone.touched">
+                            অঞ্চল/বিভাগ প্রয়োজন
+                        </small>
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="name">কর্মকর্তার নাম*</label>
+                        <input type="text" class="form-control" id="name" placeholder="কর্মকর্তার নাম" formControlName="name">
+                        <small class="text-danger" *ngIf="form.controls.name.errors && form.controls.name.touched">
+                            কর্মকর্তার নাম প্রয়োজন
+                        </small>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="fatehrName">কর্মকর্তার পিতার নাম</label>
+                        <input type="text" class="form-control" id="fatehrName" placeholder="কর্মকর্তার পিতার নাম" formControlName="fatehrName">
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="designation">পদবি*</label>
+                        <input type="text" class="form-control" id="designation" placeholder="কর্মকর্তার পদবি" formControlName="designation">
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="phone">ফোন নম্বর</label>
+                        <input type="text" class="form-control" maxlength="11" id="phone" placeholder="কর্মকর্তার ফোন নম্বর" formControlName="phone">
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="dateOfBirth">জন্ম তারিখ</label>
+                        <div class="input-group">
+                            <input class="form-control" placeholder="yyyy-mm-dd" [minDate]="minDate" [maxDate]="maxDate" name="dateOfBirth" id="dateOfBirth"
+                                formControlName="dateOfBirth" ngbDatepicker #date="ngbDatepicker" (click)="date.toggle()">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary calendar" (click)="date.toggle()" type="button">
+                                    <i class="fa fa-calendar"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="selfDeduction">নিজ কর্তন*</label>
+                        <input type="number" class="form-control" id="selfDeduction" placeholder="নিজ কর্তন" formControlName="selfDeduction">
+                        <small class="text-danger" *ngIf="form.controls.selfDeduction.errors && form.controls.selfDeduction.touched">
+                            নিজ কর্তন প্রয়োজন
+                        </small>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="organizationalContribution">সাংগঠনিক অবদান*</label>
+                        <input type="number" class="form-control" id="organizationalContribution" placeholder="সাংগঠনিক অবদান" formControlName="organizationalContribution">
+                        <small class="text-danger" *ngIf="form.controls.organizationalContribution.errors && form.controls.organizationalContribution.touched">
+                            সাংগঠনিক অবদান প্রয়োজন
+                        </small>
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="mouseoverShifting" class="text-danger">
+                {{ getFormValidationErrors() }}
+            </div>
+
+            <div class="d-flex flex-row-reverse bd-highlight my-2 mb-5">
+                <span (mouseenter)="mouseoverShifting = true">
+                    <button type="submit" class="btn btn-warning mx-1 shadow-sm" [ngClass]="{
+                                  disabled: form.invalid,
+                                  'btn-warning': exists,
+                                  'btn-success': !exists
+                                }">
+                        অঞ্চল/বিভাগ {{ exists ? 'হালনাগাদ' : 'তৈরি' }} করুন
+                    </button>
+                </span>
+                <button type="button" class="btn btn-sm btn-light mx-1 shadow-sm" (click)="clear()">পরিষ্কার করুন</button>
+                <button type="button" class="btn btn-sm btn-danger mx-1 shadow-sm" *ngIf="zone && zone.id" (click)="onDelete(zone.id)">মুছে ফেলুন</button>
+            </div>
+        </form>
+    </div>
+</div>
