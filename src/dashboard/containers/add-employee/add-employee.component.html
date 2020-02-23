@@ -1,5 +1,14 @@
 <div class="container">
     <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-danger" *ngIf="errorMessage.length>0">
+                {{errorMessage}}
+                <button class="btn btn-sm btn-warning" (click)="clear()">clear</button>
+            </div>
+            <div class="alert alert-success" *ngIf="message.length>0">
+                {{message}}
+            </div>
+        </div>
         <dir class="col-md-12">
             <loading *ngIf="sendingData"></loading>
             <employee-form *ngIf="!sendingData" [employee]="employee" [zoneList]="zoneList" (create)="onCreate($event)" (update)="onUpdate($event)"

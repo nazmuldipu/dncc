@@ -3,6 +3,9 @@ import { AuthService } from 'src/services/auth.service';
 import { UserService } from 'src/services/user.service';
 import { Router } from '@angular/router';
 import { take } from 'rxjs/operators';
+import { ZoneService } from 'src/services/zone.service';
+import { FiscalYearService } from 'src/services/fiscal-year.service';
+import { EmployeeService } from 'src/services/employee.service';
 
 @Component({
   selector: 'dash-nav',
@@ -17,6 +20,9 @@ export class DashNavComponent implements OnInit {
 
   constructor(private auth: AuthService,
     private userService: UserService,
+    private zoneService: ZoneService,
+    private fiscalYearService: FiscalYearService,
+    private employeeService: EmployeeService,
     private router: Router) { }
 
   async ngOnInit() {
@@ -29,9 +35,10 @@ export class DashNavComponent implements OnInit {
             this.auth._userSource.next(this.appUser);
             // let companyId = this.appUser.companyId;
             if (this.appUser.companyId) {
-              // localStorage.setItem('companyId', companyId);
-              // this.groupService.getAndStoreAll(companyId);
-              // this.peopleService.getAndStoreAll(companyId);
+              // this.employeeService.getAndStoreAll();
+              // this.fiscalYearService.getAndStoreAll();
+              // this.zoneService.getAndStoreAll();
+
               // this.companyService.getAndStore(companyId);
 
             } else {

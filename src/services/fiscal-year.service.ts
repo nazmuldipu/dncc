@@ -14,7 +14,9 @@ export class FiscalYearService {
   fiscalYears$ = this._fiscalYearSource.asObservable();
   fiscalYears: FiscalYear[] = [];
 
-  constructor(private afs: AngularFirestore) { }
+  constructor(private afs: AngularFirestore) {
+    this.getAndStoreAll();
+  }
 
   getAndStoreAll() {
     this.getAll().subscribe(data => {

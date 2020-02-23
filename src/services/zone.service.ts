@@ -14,7 +14,9 @@ export class ZoneService {
   zones$ = this._zoneSource.asObservable();
   zones: Zone[] = [];
 
-  constructor(private afs: AngularFirestore) { }
+  constructor(private afs: AngularFirestore) {
+    this.getAndStoreAll();
+  }
 
   getAndStoreAll() {
     this.getAll().subscribe(data => {

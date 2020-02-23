@@ -22,6 +22,9 @@
                 <li class="nav-item" *ngIf="hasAdminRole()">
                     <a class="nav-link" (click)="toggleCollapse()" routerLink="/dashboard/add-employee">কর্মকর্তা সংযোজন</a>
                 </li>
+                <li class="nav-item" *ngIf="hasAdminRole()">
+                    <a class="nav-link" (click)="toggleCollapse()" routerLink="/dashboard/employee-list">কর্মকর্তা তালিকা</a>
+                </li>
                 <!-- <li class="nav-item" *ngIf="hasAdminRole()">
                     <a class="nav-link" (click)="toggleCollapse()" routerLink="/dashboard/company">COMPANY</a>
                 </li>

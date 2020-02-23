@@ -15,7 +15,9 @@ export class EmployeeService {
   employees$ = this._employeeSource.asObservable();
   employees: Employee[] = [];
 
-  constructor(private afs: AngularFirestore) { }
+  constructor(private afs: AngularFirestore) {
+    this.getAndStoreAll();
+  }
 
   getAndStoreAll() {
     this.getAll().subscribe(data => {
@@ -39,7 +41,7 @@ export class EmployeeService {
       })));
   }
 
-  get(eid) {
+  get(eid): Observable<any> {
     return this.afs.doc(this.serviceUrl + '/' + eid).valueChanges();
   }
 

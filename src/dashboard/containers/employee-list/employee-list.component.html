@@ -1,0 +1,37 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12 shadow-sm">
+            <div class="text-center">
+                <h5 class="h3 my-3 font-weight-normal">
+                    <strong> কর্মকর্তার তালিকা</strong>
+                </h5>
+            </div>
+            <table class="table border table-responsive-sm">
+                <thead>
+                    <tr>
+                        <th>হিসাব নং / আইডি নং</th>
+                        <th>নাম</th>
+                        <th>পিতার নাম</th>
+                        <th>ফোন</th>
+                        <th>পদবী</th>
+                        <th>অঞ্চল / বিভাগ</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let emp of employeeList">
+                        <td>{{emp.empId}}</td>
+                        <td>{{emp.name}}</td>
+                        <td>{{emp.fatehrName}}</td>
+                        <td>{{emp.phone}}</td>
+                        <td>{{emp.designation}}</td>
+                        <td>{{emp.zone}}</td>
+                        <td>
+                            <a class="btn btn-sm btn-warning raised" (click)="editEmployee(emp.id)">Edit</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
