@@ -1,0 +1,152 @@
+<div class="container-fluid">
+    <div class="row d-print-none bg-light shadow-sm">
+        <div class="col-auto">
+            <div class="form-group">
+                <label for="fiscalYear">অর্থবছর</label>
+                <select class="form-control" id="fiscalYear" (change)="onSelectFiscalYear($event.target.value)">
+                    <option value=""> অর্থবছর সিলেক্ট করুন </option>
+                    <option *ngFor="let fy of fiscalYearList" [value]="fy.id" [selected]="fy.active">
+                        {{ fy.name }}
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <label for="typeahead-prevent-manual-entry">কর্মকর্তার আইডি টাইপ করুন</label>
+            <input id="typeahead-prevent-manual-entry" type="text" class="form-control" (selectItem)="searchEmployee($event)" [(ngModel)]="employee"
+                [ngbTypeahead]="search" [inputFormatter]="formatter" [resultFormatter]="formatter" [editable]='false' />
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-12" *ngIf="employee && fiscalYear">
+            <h5 class="h3 text-center py-2">
+                <strong> অ্যাকাউন্ট সংযোজন </strong>
+            </h5>
+
+            <div class="form-group row">
+                <label for="fiscalYear" class="col-sm-2 col-form-label text-right">অর্থ বছর</label>
+                <div class="col-sm-2">
+                    <label id="fiscalYear" class="form-control">{{fiscalYear.name}}</label>
+                </div>
+                <label for="fiscalYear" class="col-sm-2 col-form-label text-right">অঞ্চল/বিভাগ</label>
+                <div class="col-sm-2">
+                    <label id="fiscalYear" class="form-control">{{employee.zone}}</label>
+                </div>
+                <label for="fiscalYear" class="col-sm-2 col-form-label text-right">সমাপনী স্থিতি </label>
+                <div class="col-sm-2">
+                    <label id="fiscalYear" class="form-control">0</label>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="fiscalYear" class="col-sm-2 col-form-label text-right">হিসাব নং / আইডি নং </label>
+                <div class="col-sm-2">
+                    <label id="fiscalYear" class="form-control">{{employee.empId}}</label>
+                </div>
+                <label for="fiscalYear" class="col-sm-2 col-form-label text-right">জন্ম তারিখ</label>
+                <div class="col-sm-3">
+                    <label id="fiscalYear" class="form-control">{{employee.dateOfBirth.day}}/{{employee.dateOfBirth.month}}/{{employee.dateOfBirth.year}}</label>
+                </div>
+                <label for="fiscalYear" class="col-sm-1 col-form-label text-right">পদবী</label>
+                <div class="col-sm-2">
+                    <label id="fiscalYear" class="form-control">{{employee.designation}}</label>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="fiscalYear" class="col-sm-2 col-form-label text-right">নাম</label>
+                <div class="col-sm-4">
+                    <label id="fiscalYear" class="form-control">{{employee.name}}</label>
+                </div>
+                <label for="fiscalYear" class="col-sm-2 col-form-label text-right">পিতার নাম</label>
+                <div class="col-sm-4">
+                    <label id="fiscalYear" class="form-control">{{employee.fatehrName}}</label>
+                </div>
+
+            </div>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <td *ngFor="let n of serialNumber">{{n}}</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>মাসের নাম</td>
+                            <td *ngFor="let m of monthName">{{m}}</td>
+                            <td>উপমোট</td>
+                            <td>মোট</td>
+                            <td>পূর্ববর্তী লোন</td>
+                            <td>চলতি সালের সুদ</td>
+                            <td>গত বছরের স্থিতি</td>
+                            <td>এই বছরের প্রারম্ভিক স্থিতি</td>
+                            <td>এই বছরের সুদ</td>
+                            <td>সমাপনী</td>
+                        </tr>
+                        <tr>
+                            <td>নিজ কর্তন</td>
+                            <td *ngFor="let sbl of account?.subAccountList; let i = index">
+                                <span *ngIf="!edit">{{sbl.selfDeduction}}</span>
+                                <input *ngIf="edit" type="number" class="form-control" [(ngModel)]="sbl.selfDeduction" (keyup)="updateTotal()">
+                            </td>
+                            <td>{{account?.subTotal[0]}}</td>
+                            <td>{{account?.total}}</td>
+                            <td>
+                                <span *ngIf="!edit">{{account?.previousYearLoan}}</span>
+                                <!-- {{account?.previousYearLoan}} -->
+                                <input *ngIf="edit" type="number" class="form-control" [(ngModel)]="account.previousYearLoan" (keyup)="updateTotal()">
+                            </td>
+                            <td>{{account?.currentYearInterest}}</td>
+                            <td>{{account?.lastYearBalance}}</td>
+                            <td>{{account?.currentYearBalance}}</td>
+                            <td>{{account?.lastYearInterest}}</td>
+                            <td>{{account?.grandTotal}}</td>
+                        </tr>
+                        <tr>
+                            <td>কন্ট্রিবিউশন</td>
+                            <td *ngFor="let sbl of account?.subAccountList; let i = index">
+                                <span *ngIf="!edit">{{sbl.organizationalContribution}}</span>
+                                <input *ngIf="edit" type="number" class="form-control" [(ngModel)]="sbl.organizationalContribution" (keyup)="updateTotal()">
+                            </td>
+                            <td>{{account?.subTotal[1]}}</td>
+                        </tr>
+                        <tr>
+                            <td>অগ্রিম কর্তন</td>
+                            <td *ngFor="let sbl of account?.subAccountList; let i = index">
+                                <span *ngIf="!edit">{{sbl.advanceDeduction}}</span>
+                                <input *ngIf="edit" type="number" class="form-control" [(ngModel)]="sbl.advanceDeduction" (keyup)="updateTotal()">
+                            </td>
+                            <td>{{account?.subTotal[2]}}</td>
+                        </tr>
+                        <tr>
+                            <td>অগ্রিম প্রদান</td>
+                            <td *ngFor="let sbl of account?.subAccountList; let i = index">
+                                <span *ngIf="!edit">{{sbl.advanceReturn}}</span>
+                                <input *ngIf="edit" type="number" class="form-control" [(ngModel)]="sbl.advanceReturn" (keyup)="updateTotal()">
+                            </td>
+                            <td>{{account?.subTotal[3]}}</td>
+                        </tr>
+                        <tr>
+                            <td>অতিরিক্ত কর্তন</td>
+                            <td *ngFor="let sbl of account?.subAccountList; let i = index">
+                                <span *ngIf="!edit">{{sbl.extraDeduction}}</span>
+                                <input *ngIf="edit" type="number" class="form-control" [(ngModel)]="sbl.extraDeduction" (keyup)="updateTotal()">
+                            </td>
+                            <td>{{account?.subTotal[4]}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-md-12" *ngIf="account">
+            <div class="d-flex flex-row-reverse bd-highlight">
+                <button class="btn btn-sm btn-primary mx-1">Print</button>
+                <button class="btn btn-sm btn-warning mx-1" *ngIf="!edit" (click)="edit=true">Edit</button>
+                <button class="btn btn-sm btn-success mx-1" *ngIf="edit && !exists" (click)="save()">Save</button>
+                <button class="btn btn-sm btn-warning mx-1" *ngIf="edit && exists" (click)="update()">Update</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- {{account | json}} -->

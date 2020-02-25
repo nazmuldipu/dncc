@@ -4,6 +4,7 @@ export class FiscalYear {
     nextId: string;
     serialNo: string;
     name: string;
+    active: boolean;
     constructor(
         id?: string,
         name?: string,

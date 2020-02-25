@@ -14,6 +14,7 @@ import { FiscalYearFormComponent } from './components/fiscal-year-form/fiscal-ye
 import { AddEmployeeComponent } from './containers/add-employee/add-employee.component';
 import { EmployeeFormComponent } from './components/employee-form/employee-form.component';
 import { EmployeeListComponent } from './containers/employee-list/employee-list.component';
+import { AccountsComponent } from './containers/accounts/accounts.component';
 
 export const ROUTES: Routes = [
   {
@@ -21,6 +22,7 @@ export const ROUTES: Routes = [
     component: DashboardComponent,
     children: [
       { path: 'employee-list', component: EmployeeListComponent },
+      { path: 'accounts', component: AccountsComponent },
       { path: 'add-employee', component: AddEmployeeComponent },
       { path: 'add-employee/:id', component: AddEmployeeComponent },
       { path: 'fiscal-year', component: FiscalYearComponent },
@@ -31,7 +33,7 @@ export const ROUTES: Routes = [
 ];
 
 @NgModule({
-  declarations: [DashboardComponent, IndexComponent, DashNavComponent, ZoneComponent, ZoneFormComponent, ZoneListComponent, FiscalYearComponent, FiscalYearListComponent, FiscalYearFormComponent, AddEmployeeComponent, EmployeeFormComponent, EmployeeListComponent],
+  declarations: [DashboardComponent, IndexComponent, DashNavComponent, ZoneComponent, ZoneFormComponent, ZoneListComponent, FiscalYearComponent, FiscalYearListComponent, FiscalYearFormComponent, AddEmployeeComponent, EmployeeFormComponent, EmployeeListComponent, AccountsComponent],
   imports: [
     SharedModule, RouterModule.forChild(ROUTES)
   ]

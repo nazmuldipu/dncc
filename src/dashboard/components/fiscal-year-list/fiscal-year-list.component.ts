@@ -9,6 +9,7 @@ import { FiscalYear } from 'src/shared/models/fiscal-year.model';
 export class FiscalYearListComponent {
   @Input() fiscalYearList: FiscalYear[];
   @Output() edit = new EventEmitter();
+  @Output() activate = new EventEmitter();
 
   editFiscalYear(id) {
     this.edit.emit(id);
@@ -18,5 +19,9 @@ export class FiscalYearListComponent {
     const value = this.fiscalYearList.find(fyl => fyl.id == id);
     if (!!value) return value.name;
     return '';
+  }
+
+  onActivate(id) {
+    this.activate.emit(id);
   }
 }

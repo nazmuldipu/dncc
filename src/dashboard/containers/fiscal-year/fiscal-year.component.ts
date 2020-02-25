@@ -44,6 +44,19 @@ export class FiscalYearComponent implements OnInit {
     this.fiscalYear = this.fiscalYearList.find(cp => cp.id === id);
   }
 
+  onActivate(id) {
+    const activated = this.fiscalYearList.find(fy => fy.active == true);
+    const value = this.fiscalYearList.find(fy => fy.id == id);
+    value.active = true;
+    if (!activated) {
+      this.fiscalYearService.update(value.id, value);
+    } else if (activated.id != id) {
+      activated.active = false;
+      this.fiscalYearService.update(activated.id, activated);
+      this.fiscalYearService.update(value.id, value);
+    }
+  }
+
   async onCreate(event: FiscalYear) {
     this.sendingData = true;
     await this.fiscalYearService.create(event)

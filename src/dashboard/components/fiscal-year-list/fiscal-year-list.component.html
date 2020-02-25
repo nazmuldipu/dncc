@@ -8,21 +8,28 @@
         <table class="table border table-responsive-sm">
             <thead>
                 <tr>
-                    <th>সিরিয়াল</th>
-                    <th>পূর্ববর্তী অর্থবছরের নাম</th>
-                    <th>নাম</th>
-                    <th>পরবর্তী অর্থবছরের নাম</th>
+                    <th class="text-center">সিরিয়াল</th>
+                    <th class="text-center">পূর্ববর্তী অর্থবছরের নাম</th>
+                    <th class="text-center">নাম</th>
+                    <th class="text-center">পরবর্তী অর্থবছরের নাম</th>
+                    <th class="text-center">সক্রিয়</th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let com of fiscalYearList">
-                    <td>{{com.serialNo}}</td>
-                    <td>{{getFiscalYearName(com.prevId)}}</td>
-                    <th>{{com.name}}</th>
-                    <td>{{getFiscalYearName(com.nextId)}}</td>
-                    <td>
+                    <td class="text-center">{{com.serialNo}}</td>
+                    <td class="text-center">{{getFiscalYearName(com.prevId)}}</td>
+                    <th class="text-center">{{com.name}}</th>
+                    <td class="text-center">{{getFiscalYearName(com.nextId)}}</td>
+                    <th class="text-center">
+                        <i class="fa" [ngClass]="{'fa-check': com.active }"></i>
+                    </th>
+                    <td class="text-center">
                         <a class="btn btn-sm btn-warning raised" (click)="editFiscalYear(com.id)">Edit</a>
+                        <button class="btn btn-sm btn-danger raised mx-1" (click)="onActivate(com.id)">
+                            <i class="fa fa-power-off"></i>
+                        </button>
                     </td>
                 </tr>
             </tbody>

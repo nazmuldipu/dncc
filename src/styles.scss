@@ -2,13 +2,13 @@
 @import '~bootstrap/dist/css/bootstrap.css';
 @import '~font-awesome/css/font-awesome.min.css';
 
+@font-face {
+    font-family: 'SolaimanLipi';
+    src: url('assets/fonts/SolaimanLipi.ttf');
+}
 
-// variables
-$dark-primary-color: #00796b;
-$default-primary-color: #009688;
-$light-primary-color: #b2dfdb;
-$text-primary-color: #ffffff;
-$accent-color: #ffc107;
-$primary-text-color: #212121;
-$secondary-text-color: #212121;
-$divider-color: #bdbdbd;
+body {
+    font-family: 'SolaimanLipi', Arial, sans-serif !important;
+    font-weight: 300;
+  }
+  
