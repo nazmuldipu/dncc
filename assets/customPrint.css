@@ -1,0 +1,6 @@
+/* @media print {
+    @page {
+        size: a4;
+        orientation: landscape !important;        
+    }
+} */
