@@ -25,7 +25,7 @@ export class AccountsComponent implements OnInit {
   employeeList: Employee[] = [];
   fiscalYearList: FiscalYear[] = [];
   loadingData = false;
-  serialNumber = ["১", "২", "৩", "৪", "৫", "৬", "৭", "৮", "৯", "১০", "১১", "১২", "১৩", "১৪", "১৫", "১৬", "১৭", "১৮", "১৯", "২০", "২১"];
+  serialNumber = ["১", "২", "৩", "৪", "৫", "৬", "৭", "৮", "৯", "১০", "১১", "১২", "১৩", "১৪", "১৫", "১৬", "১৭", "১৮", "১৯", "২০"];
   monthName = ["জুলাই", "আগস্ট", "সেপ্টে", "অক্টো", "নভে", "ডিসে", "জানু", "ফেব্রু", "মার্চ", "এপ্রিল", "মে", "জুন"];
 
   formatter = (employee: Employee) => employee.name;
@@ -102,6 +102,10 @@ export class AccountsComponent implements OnInit {
     }
   }
 
+  onPrint() {
+    (window as any).print('height=600,width=800');
+  }
+
   async getEmployeeAccount(empId, fyId) {
     await this.accountService.getByEmployeeIdAndFiscalYearId(empId, fyId).subscribe(data => {
       if (data.length) {
@@ -111,9 +115,9 @@ export class AccountsComponent implements OnInit {
         const subAccountList = this.getNewSubaccountList(empId, fyId);
         const subTotal = this.getSubTotal(subAccountList);
         const total = this.getTotal(subTotal);
-        const currentYearInterest = this.interestRate * total / 100;
+        const currentYearInterest = Number(Math.round(this.interestRate * total / 100).toFixed(2));
         const lastYearBalance = 500;//TODO
-        const lastYearInterest = this.interestRate * lastYearBalance / 100;
+        const lastYearInterest = Number(Math.round(this.interestRate * lastYearBalance / 100).toFixed(2));
         const grandTotal = total + currentYearInterest + lastYearBalance + lastYearInterest
         this.account = {
           id: null,
@@ -173,10 +177,13 @@ export class AccountsComponent implements OnInit {
   }
 
   updateTotal() {
+    this.account.currentYearBalance = this.account.lastYearBalance;
+    this.account.lastYearInterest = Number(Math.round(this.account.currentYearBalance * 13 / 100).toFixed(2));
     this.account.subTotal = this.getSubTotal(this.account.subAccountList);
     this.account.total = this.getTotal(this.account.subTotal);
-    this.account.currentYearInterest = this.interestRate * this.account.total / 100;
-    this.account.grandTotal = this.account.total + this.account.currentYearInterest + this.account.lastYearBalance + this.account.lastYearInterest - this.account.previousYearLoan;
+    this.account.currentYearInterest = Number(Math.round(this.interestRate * this.account.total / 100).toFixed(2));
+    this.account.grandTotal = this.account.total + this.account.currentYearInterest + this.account.lastYearBalance + this.account.lastYearInterest;
+    this.account.currentLoanStatus = this.account.previousYearLoan - this.account.subTotal[2] + this.account.subTotal[3];
   }
 
   async save() {

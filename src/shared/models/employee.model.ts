@@ -1,3 +1,5 @@
+import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
+
 export class Employee {
     id: string;
     empId: string;
@@ -5,7 +7,7 @@ export class Employee {
     fatehrName: string;
     phone: string;
     designation: string;
-    dateOfBirth: Date;
+    dateOfBirth: NgbDate;
     zone: string;
     selfDeduction: number;
     organizationalContribution: number;

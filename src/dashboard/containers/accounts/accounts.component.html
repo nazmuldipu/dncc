@@ -75,7 +75,6 @@
                             <td *ngFor="let m of monthName">{{m}}</td>
                             <td>উপমোট</td>
                             <td>মোট</td>
-                            <td>পূর্ববর্তী লোন</td>
                             <td>চলতি সালের সুদ</td>
                             <td>গত বছরের স্থিতি</td>
                             <td>এই বছরের প্রারম্ভিক স্থিতি</td>
@@ -90,13 +89,11 @@
                             </td>
                             <td>{{account?.subTotal[0]}}</td>
                             <td>{{account?.total}}</td>
-                            <td>
-                                <span *ngIf="!edit">{{account?.previousYearLoan}}</span>
-                                <!-- {{account?.previousYearLoan}} -->
-                                <input *ngIf="edit" type="number" class="form-control" [(ngModel)]="account.previousYearLoan" (keyup)="updateTotal()">
-                            </td>
                             <td>{{account?.currentYearInterest}}</td>
-                            <td>{{account?.lastYearBalance}}</td>
+                            <td>
+                                <span *ngIf="!edit">{{account?.lastYearBalance}}</span>
+                                <input *ngIf="edit" type="number" class="form-control" [(ngModel)]="account.lastYearBalance" (keyup)="updateTotal()">
+                            </td>
                             <td>{{account?.currentYearBalance}}</td>
                             <td>{{account?.lastYearInterest}}</td>
                             <td>{{account?.grandTotal}}</td>
@@ -108,6 +105,7 @@
                                 <input *ngIf="edit" type="number" class="form-control" [(ngModel)]="sbl.organizationalContribution" (keyup)="updateTotal()">
                             </td>
                             <td>{{account?.subTotal[1]}}</td>
+
                         </tr>
                         <tr>
                             <td>অগ্রিম কর্তন</td>
@@ -116,6 +114,10 @@
                                 <input *ngIf="edit" type="number" class="form-control" [(ngModel)]="sbl.advanceDeduction" (keyup)="updateTotal()">
                             </td>
                             <td>{{account?.subTotal[2]}}</td>
+                            <td></td>
+                            <td>পূর্ববর্তী লোন</td>
+                            <td>বর্তমান লোন</td>
+
                         </tr>
                         <tr>
                             <td>অগ্রিম প্রদান</td>
@@ -124,6 +126,13 @@
                                 <input *ngIf="edit" type="number" class="form-control" [(ngModel)]="sbl.advanceReturn" (keyup)="updateTotal()">
                             </td>
                             <td>{{account?.subTotal[3]}}</td>
+                            <td></td>
+                            <td>
+                                <span *ngIf="!edit">{{account?.previousYearLoan}}</span>
+                                <input *ngIf="edit" type="number" class="form-control" [(ngModel)]="account.previousYearLoan" (keyup)="updateTotal()">
+                            </td>
+
+                            <td>{{account?.currentLoanStatus}}</td>
                         </tr>
                         <tr>
                             <td>অতিরিক্ত কর্তন</td>

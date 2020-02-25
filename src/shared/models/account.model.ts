@@ -6,6 +6,7 @@ export class Accounts {
     fiscalYearId: string;
     subAccountList: SubAccount[];
     previousYearLoan: number;
+    currentLoanStatus: number;
     subTotal: number[];
     total: number;
     currentYearInterest: number;

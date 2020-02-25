@@ -95,7 +95,7 @@
                 </div>
                 <div class="col">
                     <div class="form-group">
-                        <label for="organizationalContribution">সাংগঠনিক অবদান*</label>
+                        <label for="organizationalContribution">সংস্থা কর্তিক প্রদেয়*</label>
                         <input type="number" class="form-control" id="organizationalContribution" placeholder="সাংগঠনিক অবদান" formControlName="organizationalContribution">
                         <small class="text-danger" *ngIf="form.controls.organizationalContribution.errors && form.controls.organizationalContribution.touched">
                             সাংগঠনিক অবদান প্রয়োজন
@@ -119,7 +119,7 @@
                     </button>
                 </span>
                 <button type="button" class="btn btn-sm btn-light mx-1 shadow-sm" (click)="clear()">পরিষ্কার করুন</button>
-                <button type="button" class="btn btn-sm btn-danger mx-1 shadow-sm" *ngIf="zone && zone.id" (click)="onDelete(zone.id)">মুছে ফেলুন</button>
+                <button type="button" class="btn btn-sm btn-danger mx-1 shadow-sm" *ngIf="employee && employee.id" (click)="onDelete(employee.id)">মুছে ফেলুন</button>
             </div>
         </form>
     </div>

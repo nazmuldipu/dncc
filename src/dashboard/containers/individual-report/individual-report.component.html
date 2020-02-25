@@ -44,7 +44,7 @@
                 </div>
                 <label for="fiscalYear" class="col-sm-2 col-form-label text-right">জন্ম তারিখ</label>
                 <div class="col-sm-3">
-                    <label id="fiscalYear" class="form-control">{{employee.dateOfBirth.day}}/{{employee.dateOfBirth.month}}/{{employee.dateOfBirth.year}}</label>
+                    <label id="fiscalYear" class="form-control">{{employee?.dateOfBirth.day}}/{{employee?.dateOfBirth.month}}/{{employee?.dateOfBirth.year}}</label>
                 </div>
                 <label for="fiscalYear" class="col-sm-1 col-form-label text-right">পদবী</label>
                 <div class="col-sm-2">
@@ -74,7 +74,6 @@
                             <td *ngFor="let m of monthName">{{m}}</td>
                             <td>উপমোট</td>
                             <td>মোট</td>
-                            <td>পূর্ববর্তী লোন</td>
                             <td>চলতি সালের সুদ</td>
                             <td>গত বছরের স্থিতি</td>
                             <td>এই বছরের প্রারম্ভিক স্থিতি</td>
@@ -84,13 +83,10 @@
                         <tr>
                             <td>নিজ কর্তন</td>
                             <td *ngFor="let sbl of account?.subAccountList; let i = index">
-                                <span *ngIf="!edit">{{sbl.selfDeduction}}</span>
+                                <span>{{sbl.selfDeduction}}</span>
                             </td>
                             <td>{{account?.subTotal[0]}}</td>
                             <td>{{account?.total}}</td>
-                            <td>
-                                <span *ngIf="!edit">{{account?.previousYearLoan}}</span>
-                            </td>
                             <td>{{account?.currentYearInterest}}</td>
                             <td>{{account?.lastYearBalance}}</td>
                             <td>{{account?.currentYearBalance}}</td>
@@ -100,28 +96,35 @@
                         <tr>
                             <td>কন্ট্রিবিউশন</td>
                             <td *ngFor="let sbl of account?.subAccountList; let i = index">
-                                <span *ngIf="!edit">{{sbl.organizationalContribution}}</span>
+                                <span>{{sbl.organizationalContribution}}</span>
                             </td>
                             <td>{{account?.subTotal[1]}}</td>
+
                         </tr>
                         <tr>
                             <td>অগ্রিম কর্তন</td>
                             <td *ngFor="let sbl of account?.subAccountList; let i = index">
-                                <span *ngIf="!edit">{{sbl.advanceDeduction}}</span>
+                                <span>{{sbl.advanceDeduction}}</span>
                             </td>
                             <td>{{account?.subTotal[2]}}</td>
+                            <td></td>
+                            <td>পূর্ববর্তী লোন</td>
+                            <td>বর্তমান লোন</td>
                         </tr>
                         <tr>
                             <td>অগ্রিম প্রদান</td>
                             <td *ngFor="let sbl of account?.subAccountList; let i = index">
-                                <span *ngIf="!edit">{{sbl.advanceReturn}}</span>
+                                <span>{{sbl.advanceReturn}}</span>
                             </td>
                             <td>{{account?.subTotal[3]}}</td>
+                            <td></td>
+                            <td> {{account?.previousYearLoan}} </td>
+                            <td>{{account?.currentLoanStatus}}</td>
                         </tr>
                         <tr>
                             <td>অতিরিক্ত কর্তন</td>
                             <td *ngFor="let sbl of account?.subAccountList; let i = index">
-                                <span *ngIf="!edit">{{sbl.extraDeduction}}</span>
+                                <span>{{sbl.extraDeduction}}</span>
                             </td>
                             <td>{{account?.subTotal[4]}}</td>
                         </tr>
