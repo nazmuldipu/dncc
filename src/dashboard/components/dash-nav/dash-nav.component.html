@@ -13,36 +13,29 @@
                 <li class="nav-item">
                     <a class="nav-link" (click)="toggleCollapse()" routerLink="/dashboard">ড্যাশবোর্ড</a>
                 </li>
-                <li class="nav-item" *ngIf="hasAdminRole()">
-                    <a class="nav-link" (click)="toggleCollapse()" routerLink="/dashboard/zone">বিভাগ</a>
-                </li>
-                <li class="nav-item" *ngIf="hasAdminRole()">
-                    <a class="nav-link" (click)="toggleCollapse()" routerLink="/dashboard/fiscal-year">অর্থবছর</a>
-                </li>
-                <li class="nav-item" *ngIf="hasAdminRole()">
-                    <a class="nav-link" (click)="toggleCollapse()" routerLink="/dashboard/add-employee">কর্মকর্তা সংযোজন</a>
-                </li>
-                <li class="nav-item" *ngIf="hasAdminRole()">
-                    <a class="nav-link" (click)="toggleCollapse()" routerLink="/dashboard/employee-list">কর্মকর্তা তালিকা</a>
+                <li class="nav-item text-right">
+                    <div ngbDropdown class="d-inline-block">
+                        <a class="nav-link" id="addintion" ngbDropdownToggle> সংযোজন </a>
+                        <div ngbDropdownMenu aria-labelledby="addintion">
+                            <a class="nav-link drop-link" (click)="toggleCollapse()" routerLink="/dashboard/zone">বিভাগ</a>
+                            <a class="nav-link drop-link" (click)="toggleCollapse()" routerLink="/dashboard/fiscal-year">অর্থবছর</a>
+                            <a class="nav-link drop-link" (click)="toggleCollapse()" routerLink="/dashboard/add-employee">কর্মকর্তা সংযোজন</a>
+                            <a class="nav-link drop-link" (click)="toggleCollapse()" routerLink="/dashboard/employee-list">কর্মকর্তা তালিকা</a>
+                        </div>
+                    </div>
                 </li>
                 <li class="nav-item" *ngIf="hasAdminRole()">
                     <a class="nav-link" (click)="toggleCollapse()" routerLink="/dashboard/accounts">অ্যাকাউন্ট</a>
                 </li>
-                <!-- <li class="nav-item" *ngIf="hasAdminRole()">
-                    <a class="nav-link" (click)="toggleCollapse()" routerLink="/dashboard/company">COMPANY</a>
+                <li class="nav-item text-right">
+                    <div ngbDropdown class="d-inline-block">
+                        <a class="nav-link" id="report" ngbDropdownToggle> রিপোর্ট </a>
+                        <div ngbDropdownMenu aria-labelledby="report">
+                            <a class="nav-link drop-link" (click)="toggleCollapse()" routerLink="/dashboard/all-report">সকল</a>
+                            <a class="nav-link drop-link" (click)="toggleCollapse()" routerLink="/dashboard/individual-report">স্বতন্ত্র</a>
+                        </div>
+                    </div>
                 </li>
-                <li class="nav-item" *ngIf="hasAdminRole()">
-                    <a class="nav-link" (click)="toggleCollapse()" routerLink="/dashboard/users">USERS</a>
-                </li>
-                <li class="nav-item" *ngIf="hasCompanyRole()">
-                    <a class="nav-link" (click)="toggleCollapse()" routerLink="/dashboard/groups">GROUPS</a>
-                </li>
-                <li class="nav-item" *ngIf="hasCompanyRole()">
-                    <a class="nav-link" (click)="toggleCollapse()" routerLink="/dashboard/peoples">PEOPLES</a>
-                </li>
-                <li class="nav-item" *ngIf="hasCompanyRole()">
-                    <a class="nav-link" (click)="toggleCollapse()" routerLink="/dashboard/sms">SMS</a>
-                </li> -->
             </ul>
             <ul class="navbar-nav">
                 <li class="nav-item">

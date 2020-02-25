@@ -15,12 +15,17 @@ import { AddEmployeeComponent } from './containers/add-employee/add-employee.com
 import { EmployeeFormComponent } from './components/employee-form/employee-form.component';
 import { EmployeeListComponent } from './containers/employee-list/employee-list.component';
 import { AccountsComponent } from './containers/accounts/accounts.component';
+import { IndividualReportComponent } from './containers/individual-report/individual-report.component';
+import { AllReportComponent } from './containers/all-report/all-report.component';
+import { NgxPrintModule } from 'ngx-print';
 
 export const ROUTES: Routes = [
   {
     path: '',
     component: DashboardComponent,
     children: [
+      { path: 'individual-report', component: IndividualReportComponent },
+      { path: 'all-report', component: AllReportComponent },
       { path: 'employee-list', component: EmployeeListComponent },
       { path: 'accounts', component: AccountsComponent },
       { path: 'add-employee', component: AddEmployeeComponent },
@@ -33,9 +38,9 @@ export const ROUTES: Routes = [
 ];
 
 @NgModule({
-  declarations: [DashboardComponent, IndexComponent, DashNavComponent, ZoneComponent, ZoneFormComponent, ZoneListComponent, FiscalYearComponent, FiscalYearListComponent, FiscalYearFormComponent, AddEmployeeComponent, EmployeeFormComponent, EmployeeListComponent, AccountsComponent],
+  declarations: [DashboardComponent, IndexComponent, DashNavComponent, ZoneComponent, ZoneFormComponent, ZoneListComponent, FiscalYearComponent, FiscalYearListComponent, FiscalYearFormComponent, AddEmployeeComponent, EmployeeFormComponent, EmployeeListComponent, AccountsComponent, IndividualReportComponent, AllReportComponent],
   imports: [
-    SharedModule, RouterModule.forChild(ROUTES)
+    SharedModule, NgxPrintModule, RouterModule.forChild(ROUTES)
   ]
 })
 export class DashboardModule { }

@@ -9,8 +9,6 @@ export class Employee {
     zone: string;
     selfDeduction: number;
     organizationalContribution: number;
-    // fiscalYear: string;
-    // prevBalance: string;
     constructor(
         empId?: string,
         name?: string,

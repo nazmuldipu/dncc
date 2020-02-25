@@ -33,17 +33,6 @@ export class DashNavComponent implements OnInit {
           .subscribe(data => {
             this.appUser = data;
             this.auth._userSource.next(this.appUser);
-            // let companyId = this.appUser.companyId;
-            // if (this.appUser.companyId) {
-            // this.employeeService.getAndStoreAll();
-            // this.fiscalYearService.getAndStoreAll();
-            // this.zoneService.getAndStoreAll();
-
-            // this.companyService.getAndStore(companyId);
-
-            // } else {
-            //   localStorage.removeItem('companyId');
-            // }
             this.roles = this.appUser.role;
           });
       }

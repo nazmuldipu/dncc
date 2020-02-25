@@ -17,12 +17,12 @@
                 [ngbTypeahead]="search" [inputFormatter]="formatter" [resultFormatter]="formatter" [editable]='false' />
         </div>
     </div>
-    <div class="row">
+
+    <div class="row" id="print-section">
         <div class="col-md-12" *ngIf="employee && fiscalYear">
             <h5 class="h3 text-center py-2">
-                <strong> অ্যাকাউন্ট সংযোজন </strong>
+                <strong>{{employee.empId}}ঃ {{employee.name}} এর {{fiscalYear.name}} অর্থ বছরের রিপোর্ট </strong>
             </h5>
-
             <div class="form-group row">
                 <label for="fiscalYear" class="col-sm-2 col-form-label text-right">অর্থ বছর</label>
                 <div class="col-sm-2">
@@ -61,7 +61,6 @@
                     <label id="fiscalYear" class="form-control">{{employee.fatehrName}}</label>
                 </div>
             </div>
-
             <div class="table-responsive">
                 <table class="table table-bordered">
                     <thead>
@@ -86,14 +85,11 @@
                             <td>নিজ কর্তন</td>
                             <td *ngFor="let sbl of account?.subAccountList; let i = index">
                                 <span *ngIf="!edit">{{sbl.selfDeduction}}</span>
-                                <input *ngIf="edit" type="number" class="form-control" [(ngModel)]="sbl.selfDeduction" (keyup)="updateTotal()">
                             </td>
                             <td>{{account?.subTotal[0]}}</td>
                             <td>{{account?.total}}</td>
                             <td>
                                 <span *ngIf="!edit">{{account?.previousYearLoan}}</span>
-                                <!-- {{account?.previousYearLoan}} -->
-                                <input *ngIf="edit" type="number" class="form-control" [(ngModel)]="account.previousYearLoan" (keyup)="updateTotal()">
                             </td>
                             <td>{{account?.currentYearInterest}}</td>
                             <td>{{account?.lastYearBalance}}</td>
@@ -105,7 +101,6 @@
                             <td>কন্ট্রিবিউশন</td>
                             <td *ngFor="let sbl of account?.subAccountList; let i = index">
                                 <span *ngIf="!edit">{{sbl.organizationalContribution}}</span>
-                                <input *ngIf="edit" type="number" class="form-control" [(ngModel)]="sbl.organizationalContribution" (keyup)="updateTotal()">
                             </td>
                             <td>{{account?.subTotal[1]}}</td>
                         </tr>
@@ -113,7 +108,6 @@
                             <td>অগ্রিম কর্তন</td>
                             <td *ngFor="let sbl of account?.subAccountList; let i = index">
                                 <span *ngIf="!edit">{{sbl.advanceDeduction}}</span>
-                                <input *ngIf="edit" type="number" class="form-control" [(ngModel)]="sbl.advanceDeduction" (keyup)="updateTotal()">
                             </td>
                             <td>{{account?.subTotal[2]}}</td>
                         </tr>
@@ -121,7 +115,6 @@
                             <td>অগ্রিম প্রদান</td>
                             <td *ngFor="let sbl of account?.subAccountList; let i = index">
                                 <span *ngIf="!edit">{{sbl.advanceReturn}}</span>
-                                <input *ngIf="edit" type="number" class="form-control" [(ngModel)]="sbl.advanceReturn" (keyup)="updateTotal()">
                             </td>
                             <td>{{account?.subTotal[3]}}</td>
                         </tr>
@@ -129,7 +122,6 @@
                             <td>অতিরিক্ত কর্তন</td>
                             <td *ngFor="let sbl of account?.subAccountList; let i = index">
                                 <span *ngIf="!edit">{{sbl.extraDeduction}}</span>
-                                <input *ngIf="edit" type="number" class="form-control" [(ngModel)]="sbl.extraDeduction" (keyup)="updateTotal()">
                             </td>
                             <td>{{account?.subTotal[4]}}</td>
                         </tr>
@@ -137,15 +129,11 @@
                 </table>
             </div>
         </div>
-        <div class="col-md-12" *ngIf="account">
-            <div class="d-flex flex-row-reverse bd-highlight">
-                <button class="btn btn-sm btn-primary mx-1">Print</button>
-                <button class="btn btn-sm btn-warning mx-1" *ngIf="!edit" (click)="edit=true">Edit</button>
-                <button class="btn btn-sm btn-success mx-1" *ngIf="edit && !exists" (click)="save()">Save</button>
-                <button class="btn btn-sm btn-warning mx-1" *ngIf="edit && exists" (click)="update()">Update</button>
-            </div>
+    </div>
+
+    <div *ngIf="account">
+        <div class="d-flex flex-row-reverse bd-highlight d-print-none">
+            <button class="btn btn-sm btn-primary mx-1" (click)="onPrint()">Print</button>
         </div>
     </div>
 </div>
-
-<!-- {{account | json}} -->
