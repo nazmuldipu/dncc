@@ -95,7 +95,7 @@
                 </div>
                 <div class="col">
                     <div class="form-group">
-                        <label for="organizationalContribution">সংস্থা কর্তিক প্রদেয়*</label>
+                        <label for="organizationalContribution">সংস্থা কতৃক প্রদেয়*</label>
                         <input type="number" class="form-control" id="organizationalContribution" placeholder="সাংগঠনিক অবদান" formControlName="organizationalContribution">
                         <small class="text-danger" *ngIf="form.controls.organizationalContribution.errors && form.controls.organizationalContribution.touched">
                             সাংগঠনিক অবদান প্রয়োজন
@@ -115,7 +115,7 @@
                                   'btn-warning': exists,
                                   'btn-success': !exists
                                 }">
-                        অঞ্চল/বিভাগ {{ exists ? 'হালনাগাদ' : 'তৈরি' }} করুন
+                        কর্মকর্তা/কর্মচারী {{ exists ? 'হালনাগাদ' : 'তৈরি' }} করুন
                     </button>
                 </span>
                 <button type="button" class="btn btn-sm btn-light mx-1 shadow-sm" (click)="clear()">পরিষ্কার করুন</button>

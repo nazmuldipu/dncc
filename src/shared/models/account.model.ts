@@ -1,4 +1,5 @@
 import { SubAccount } from './sub-account.model';
+import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 
 export class Accounts {
     id: string;
@@ -14,6 +15,7 @@ export class Accounts {
     lastYearInterest: number;
     currentYearBalance: number;
     grandTotal: number;
+    advances: Advance[]
     constructor(
         id?: string,
         employeeId?: string,
@@ -29,3 +31,10 @@ export class Accounts {
         grandTotal?: number
     ) { }
 }
+
+export class Advance {
+    issueDate: NgbDate;
+    checkNumber: string;
+    amount: number;
+}
+

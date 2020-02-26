@@ -5,7 +5,7 @@ import { Employee } from 'src/shared/models/employee.model';
 import { FiscalYearService } from 'src/services/fiscal-year.service';
 import { FiscalYear } from 'src/shared/models/fiscal-year.model';
 import { AccountService } from 'src/services/account.service';
-import { Accounts } from 'src/shared/models/account.model';
+import { Accounts, Advance } from 'src/shared/models/account.model';
 import { SubAccount } from 'src/shared/models/sub-account.model';
 import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, filter } from 'rxjs/operators';
@@ -18,7 +18,11 @@ import { debounceTime, distinctUntilChanged, map, filter } from 'rxjs/operators'
 export class AccountsComponent implements OnInit {
   edit = false;
   exists = false;
-  interestRate = 13;
+  showAdvanceForm = false;
+  currentYearInterestRate = 13;
+  previousYearInterestRate = 13;
+  monthlySubscription;
+  numberOfMonth = 0;
   account: Accounts;
   employee: Employee;
   fiscalYear: FiscalYear;
@@ -115,9 +119,9 @@ export class AccountsComponent implements OnInit {
         const subAccountList = this.getNewSubaccountList(empId, fyId);
         const subTotal = this.getSubTotal(subAccountList);
         const total = this.getTotal(subTotal);
-        const currentYearInterest = Number(Math.round(this.interestRate * total / 100).toFixed(2));
+        const currentYearInterest = Number(Math.round(this.currentYearInterestRate * total / 100).toFixed(2));
         const lastYearBalance = 500;//TODO
-        const lastYearInterest = Number(Math.round(this.interestRate * lastYearBalance / 100).toFixed(2));
+        const lastYearInterest = Number(Math.round(this.previousYearInterestRate * lastYearBalance / 100).toFixed(2));
         const grandTotal = total + currentYearInterest + lastYearBalance + lastYearInterest
         this.account = {
           id: null,
@@ -177,12 +181,20 @@ export class AccountsComponent implements OnInit {
   }
 
   updateTotal() {
+    this.numberOfMonth = 0;
+    this.account.subAccountList.forEach(sa => {
+      if (sa.selfDeduction > 0) {
+        this.numberOfMonth++;
+      }
+    });
+
     this.account.currentYearBalance = this.account.lastYearBalance;
     this.account.lastYearInterest = Number(Math.round(this.account.currentYearBalance * 13 / 100).toFixed(2));
     this.account.subTotal = this.getSubTotal(this.account.subAccountList);
     this.account.total = this.getTotal(this.account.subTotal);
-    this.account.currentYearInterest = Number(Math.round(this.interestRate * this.account.total / 100).toFixed(2));
-    this.account.grandTotal = this.account.total + this.account.currentYearInterest + this.account.lastYearBalance + this.account.lastYearInterest;
+    console.log(this.employee.selfDeduction, this.employee.organizationalContribution, this.numberOfMonth, this.currentYearInterestRate)
+    this.account.currentYearInterest = Number(Math.round((this.employee.selfDeduction + this.employee.organizationalContribution) * (this.numberOfMonth + 1) * this.currentYearInterestRate / 200).toFixed(2));
+    this.account.grandTotal = Number(Math.round(this.account.total + this.account.currentYearInterest + this.account.lastYearBalance + this.account.lastYearInterest).toFixed(2));
     this.account.currentLoanStatus = this.account.previousYearLoan - this.account.subTotal[2] + this.account.subTotal[3];
   }
 
@@ -192,6 +204,7 @@ export class AccountsComponent implements OnInit {
       this.employee = null;
       this.edit = false;
       this.exists = false;
+      this.showAdvanceForm = false;
     })
   }
 
@@ -201,6 +214,20 @@ export class AccountsComponent implements OnInit {
       this.employee = null;
       this.edit = false;
       this.exists = false;
+      this.showAdvanceForm = false;
     })
+  }
+
+  onShowAdvanceForm() {
+    this.showAdvanceForm = true;
+    this.edit = true;
+  }
+
+  onCreateAdvance(event: Advance) {
+    let month = ((event.issueDate.month + 6) % 12) - 1;
+    if (!this.account.advances) this.account.advances = [];
+    this.account.advances.push(event);
+    this.account.subAccountList[month].advanceReturn = event.amount;
+    this.updateTotal();
   }
 }

@@ -19,11 +19,11 @@
     </div>
     <div class="row">
         <div class="col-md-12" *ngIf="employee && fiscalYear">
-            <h5 class="h3 text-center py-2">
+            <h5 class="h3 text-center pt-2">
                 <strong> অ্যাকাউন্ট সংযোজন </strong>
             </h5>
 
-            <div class="form-group row">
+            <div class="form-group row mb-1">
                 <label for="fiscalYear" class="col-sm-2 col-form-label text-right">অর্থ বছর</label>
                 <div class="col-sm-2">
                     <label id="fiscalYear" class="form-control">{{fiscalYear.name}}</label>
@@ -37,7 +37,7 @@
                     <label id="fiscalYear" class="form-control">0</label>
                 </div>
             </div>
-            <div class="form-group row">
+            <div class="form-group row mb-1">
                 <label for="fiscalYear" class="col-sm-2 col-form-label text-right">হিসাব নং / আইডি নং </label>
                 <div class="col-sm-2">
                     <label id="fiscalYear" class="form-control">{{employee.empId}}</label>
@@ -51,14 +51,35 @@
                     <label id="fiscalYear" class="form-control">{{employee.designation}}</label>
                 </div>
             </div>
-            <div class="form-group row">
+            <div class="form-group row mb-1">
                 <label for="fiscalYear" class="col-sm-2 col-form-label text-right">নাম</label>
                 <div class="col-sm-4">
-                    <label id="fiscalYear" class="form-control">{{employee.name}}</label>
+                    <label class="form-control">{{employee.name}}</label>
                 </div>
                 <label for="fiscalYear" class="col-sm-2 col-form-label text-right">পিতার নাম</label>
                 <div class="col-sm-4">
-                    <label id="fiscalYear" class="form-control">{{employee.fatehrName}}</label>
+                    <label class="form-control">{{employee.fatehrName}}</label>
+                </div>
+            </div>
+            <div class="form-group row mb-1">
+                <label for="fiscalYear" class="col-sm-2 col-form-label text-right">চলতি বছরের সুদের হার</label>
+                <div class="col-sm-1">
+                    <label *ngIf="!edit" class="form-control">{{currentYearInterestRate}}</label>
+                    <input *ngIf="edit" class="form-control" type="number" [(ngModel)]="currentYearInterestRate" (keyup)="updateTotal()">
+                </div>
+                <label for="fiscalYear" class="col-sm-2 col-form-label text-right">স্থিতির উপর সুদের হার</label>
+                <div class="col-sm-1">
+                    <label *ngIf="!edit" class="form-control">{{previousYearInterestRate}}</label>
+                    <input *ngIf="edit" class="form-control" type="number" [(ngModel)]="previousYearInterestRate" (keyup)="updateTotal()">
+                </div>
+                <label for="fiscalYear" class="col-sm-2 col-form-label text-right">পূর্ববর্তী লোন</label>
+                <div class="col-sm-1">
+                    <span *ngIf="!edit" class="form-control">{{account?.previousYearLoan}}</span>
+                    <input *ngIf="edit" type="number" class="form-control" [(ngModel)]="account.previousYearLoan" (keyup)="updateTotal()">
+                </div>
+                <label for="fiscalYear" class="col-sm-2 col-form-label text-right">বর্তমান লোন</label>
+                <div class="col-sm-1">
+                    <label class="form-control">{{account?.currentLoanStatus}}</label>
                 </div>
             </div>
 
@@ -105,7 +126,25 @@
                                 <input *ngIf="edit" type="number" class="form-control" [(ngModel)]="sbl.organizationalContribution" (keyup)="updateTotal()">
                             </td>
                             <td>{{account?.subTotal[1]}}</td>
-
+                            <td rowspan="4" colspan="6" *ngIf="account?.advances?.length" class="p-2">
+                                <h5 class="text-center">অগ্রিম প্রদানের বিবরণ</h5>
+                                <table class="table table-bordered ">
+                                    <thead>
+                                        <tr>
+                                            <th>প্রদানের তারিখ</th>
+                                            <th>চেক নম্বর</th>
+                                            <th>অর্থের পরিমাণ</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let adv of account.advances">
+                                            <td>{{adv.issueDate.day}}/{{adv.issueDate.month}}/{{adv.issueDate.year}}/</td>
+                                            <td>{{adv.checkNumber}}</td>
+                                            <td>{{adv.amount}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
                         </tr>
                         <tr>
                             <td>অগ্রিম কর্তন</td>
@@ -114,25 +153,17 @@
                                 <input *ngIf="edit" type="number" class="form-control" [(ngModel)]="sbl.advanceDeduction" (keyup)="updateTotal()">
                             </td>
                             <td>{{account?.subTotal[2]}}</td>
-                            <td></td>
+                            <!-- <td></td>
                             <td>পূর্ববর্তী লোন</td>
-                            <td>বর্তমান লোন</td>
+                            <td>বর্তমান লোন</td> -->
 
                         </tr>
                         <tr>
                             <td>অগ্রিম প্রদান</td>
                             <td *ngFor="let sbl of account?.subAccountList; let i = index">
-                                <span *ngIf="!edit">{{sbl.advanceReturn}}</span>
-                                <input *ngIf="edit" type="number" class="form-control" [(ngModel)]="sbl.advanceReturn" (keyup)="updateTotal()">
+                                <span>{{sbl.advanceReturn}}</span>
                             </td>
                             <td>{{account?.subTotal[3]}}</td>
-                            <td></td>
-                            <td>
-                                <span *ngIf="!edit">{{account?.previousYearLoan}}</span>
-                                <input *ngIf="edit" type="number" class="form-control" [(ngModel)]="account.previousYearLoan" (keyup)="updateTotal()">
-                            </td>
-
-                            <td>{{account?.currentLoanStatus}}</td>
                         </tr>
                         <tr>
                             <td>অতিরিক্ত কর্তন</td>
@@ -146,15 +177,18 @@
                 </table>
             </div>
         </div>
+
+        <div class="col-md-12" *ngIf="showAdvanceForm">
+            <advance-form (create)="onCreateAdvance($event)"></advance-form>
+        </div>
         <div class="col-md-12" *ngIf="account">
             <div class="d-flex flex-row-reverse bd-highlight">
-                <button class="btn btn-sm btn-primary mx-1">Print</button>
-                <button class="btn btn-sm btn-warning mx-1" *ngIf="!edit" (click)="edit=true">Edit</button>
-                <button class="btn btn-sm btn-success mx-1" *ngIf="edit && !exists" (click)="save()">Save</button>
-                <button class="btn btn-sm btn-warning mx-1" *ngIf="edit && exists" (click)="update()">Update</button>
+                <!-- <button class="btn btn-sm btn-primary mx-1">Print</button> -->
+                <button class="btn btn-sm btn-warning mx-1" *ngIf="!edit" (click)="edit=true">এডিট করুন</button>
+                <button class="btn btn-sm btn-success mx-1" *ngIf="edit && !exists" (click)="save()">সংরক্ষণ করুন</button>
+                <button class="btn btn-sm btn-warning mx-1" *ngIf="edit && exists" (click)="update()">হালনাগাদ করুন</button>
+                <button class="btn btn-sm btn-success mx-1" (click)="onShowAdvanceForm()">অগ্রিম প্রদান করুন</button>
             </div>
         </div>
     </div>
 </div>
-
-<!-- {{account | json}} -->

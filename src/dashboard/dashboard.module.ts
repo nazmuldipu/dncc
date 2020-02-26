@@ -18,6 +18,7 @@ import { AccountsComponent } from './containers/accounts/accounts.component';
 import { IndividualReportComponent } from './containers/individual-report/individual-report.component';
 import { AllReportComponent } from './containers/all-report/all-report.component';
 import { NgxPrintModule } from 'ngx-print';
+import { AdvanceFormComponent } from './components/advance-form/advance-form.component';
 
 export const ROUTES: Routes = [
   {
@@ -38,7 +39,7 @@ export const ROUTES: Routes = [
 ];
 
 @NgModule({
-  declarations: [DashboardComponent, IndexComponent, DashNavComponent, ZoneComponent, ZoneFormComponent, ZoneListComponent, FiscalYearComponent, FiscalYearListComponent, FiscalYearFormComponent, AddEmployeeComponent, EmployeeFormComponent, EmployeeListComponent, AccountsComponent, IndividualReportComponent, AllReportComponent],
+  declarations: [DashboardComponent, IndexComponent, DashNavComponent, ZoneComponent, ZoneFormComponent, ZoneListComponent, FiscalYearComponent, FiscalYearListComponent, FiscalYearFormComponent, AddEmployeeComponent, EmployeeFormComponent, EmployeeListComponent, AccountsComponent, IndividualReportComponent, AllReportComponent, AdvanceFormComponent],
   imports: [
     SharedModule, NgxPrintModule, RouterModule.forChild(ROUTES)
   ]
