@@ -206,7 +206,7 @@ export class AccountsComponent implements OnInit {
       }
       amount += Number((lastBalance * this.previousYearInterestRate / 1200).toFixed(2));
     })
-    return amount;
+    return Number(amount.toFixed(2));
   }
 
   async save() {

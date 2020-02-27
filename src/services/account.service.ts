@@ -56,6 +56,17 @@ export class AccountService {
         })));
   }
 
+  getByEmployeeId(employeeId): Observable<Accounts[]> {
+    return this.afs.collection(this.serviceUrl, ref =>
+      ref.where('employeeId', '==', employeeId)).snapshotChanges()
+      .pipe(
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data() as Accounts;
+          const id = a.payload.doc.id;
+          return { id, ...data };
+        })));
+  }
+
   update(id, account: Accounts) {
     delete account["id"]
     return this.afs.doc(this.serviceUrl + '/' + id).update({

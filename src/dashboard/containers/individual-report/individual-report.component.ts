@@ -15,14 +15,16 @@ import { Accounts } from 'src/shared/models/account.model';
   styleUrls: ['./individual-report.component.scss']
 })
 export class IndividualReportComponent implements OnInit {
-  account: Accounts;
+  // account: Accounts;
+  accountList: Accounts[] = [];
+
   employee: Employee;
   employeeList: Employee[] = [];
 
   fiscalYear: FiscalYear;
   fiscalYearList: FiscalYear[] = [];
 
-  serialNumber = ["১", "২", "৩", "৪", "৫", "৬", "৭", "৮", "৯", "১০", "১১", "১২", "১৩", "১৪", "১৫", "১৬", "১৭", "১৮", "১৯", "২০", "২১"];
+  serialNumber = ["১", "২", "৩", "৪", "৫", "৬", "৭", "৮", "৯", "১০", "১১", "১২", "১৩", "১৪", "১৫", "১৬", "১৭", "১৮", "১৯", "২০"];
   monthName = ["জুলাই", "আগস্ট", "সেপ্টে", "অক্টো", "নভে", "ডিসে", "জানু", "ফেব্রু", "মার্চ", "এপ্রিল", "মে", "জুন"];
 
   message = '';
@@ -91,21 +93,35 @@ export class IndividualReportComponent implements OnInit {
   }
 
   onSelectFiscalYear(event) {
-    this.fiscalYear = this.fiscalYearList.find(fy => fy.id == event);
+    if (event != 'all') {
+      this.fiscalYear = this.fiscalYearList.find(fy => fy.id == event);
+    } else {
+      this.fiscalYear.id = 'all';
+    }
     if (this.employee) {
-      this.getEmployeeAccount(this.employee.id, this.fiscalYear.id);
+      this.getEmployeeAccount(this.employee.id, event);
     }
   }
 
   async getEmployeeAccount(empId, fyId) {
-    this.account = null;
-    await this.accountService.getByEmployeeIdAndFiscalYearId(empId, fyId).subscribe(data => {
-      if (data.length) {
-        this.account = data[0];
-      } else {
-        this.message = 'No account information yet';
-      }
-    })
+    this.accountList = [];
+    if (fyId == 'all') {
+      await this.accountService.getByEmployeeId(empId).subscribe(data => {
+        if (data.length) {
+          this.accountList = data;
+        } else {
+          this.message = 'No account information yet';
+        }
+      });
+    } else {
+      await this.accountService.getByEmployeeIdAndFiscalYearId(empId, fyId).subscribe(data => {
+        if (data.length) {
+          this.accountList = data;
+        } else {
+          this.message = 'No account information yet';
+        }
+      });
+    }
   }
 
   onPrint() {

@@ -61,14 +61,12 @@ export class FiscalYearComponent implements OnInit {
     this.sendingData = true;
     await this.fiscalYearService.create(event)
       .then(data => {
-        console.log(data);
         if (event.prevId) {
           const value = this.fiscalYearList.find(fyl => fyl.id == event.prevId);
           value.nextId = data.id;
           this.fiscalYear.id = event.prevId;
           this.onUpdate(value);
         }
-
         this.sendingData = false;
       })
       .catch((error) => {
@@ -80,9 +78,9 @@ export class FiscalYearComponent implements OnInit {
 
   async onUpdate(event: FiscalYear) {
     this.sendingData = true;
-    await this.fiscalYearService.update(this.fiscalYear.id, event)
+    await this.fiscalYearService.update(event.id, event)
       .then(() => {
-        this.sendingData = false;
+
       })
       .catch((error) => {
         this.sendingData = false;

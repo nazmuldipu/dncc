@@ -42,7 +42,8 @@ export class FiscalYearFormComponent implements OnChanges {
   submit() {
     if (this.form.valid) {
       if (this.exists) {
-        this.update.emit(this.form.value);
+        const value = { ...this.fiscalYear, ...this.form.value };
+        this.update.emit(value);
       } else {
         this.create.emit(this.form.value);
       }
