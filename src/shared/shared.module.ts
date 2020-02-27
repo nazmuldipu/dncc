@@ -4,12 +4,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { LoadingComponent } from './loading/loading.component';
+import { MycurrencyPipe } from './pipes/mycurrency.pipe';
 
 @NgModule({
-  declarations: [LoadingComponent],
+  declarations: [LoadingComponent, MycurrencyPipe],
   imports: [
     CommonModule, FormsModule, ReactiveFormsModule, RouterModule, NgbModule
   ],
-  exports: [NgbModule, CommonModule, FormsModule, ReactiveFormsModule, LoadingComponent]
+  exports: [MycurrencyPipe, NgbModule, CommonModule, FormsModule, ReactiveFormsModule, LoadingComponent]
 })
 export class SharedModule { }

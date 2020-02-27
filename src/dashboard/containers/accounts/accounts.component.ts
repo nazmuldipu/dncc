@@ -119,9 +119,9 @@ export class AccountsComponent implements OnInit {
         const subAccountList = this.getNewSubaccountList(empId, fyId);
         const subTotal = this.getSubTotal(subAccountList);
         const total = this.getTotal(subTotal);
-        const currentYearInterest = Number(Math.round(this.currentYearInterestRate * total / 100).toFixed(2));
+        const currentYearInterest = Number((this.currentYearInterestRate * total / 100).toFixed(2));
         const lastYearBalance = 500;//TODO
-        const lastYearInterest = Number(Math.round(this.previousYearInterestRate * lastYearBalance / 100).toFixed(2));
+        const lastYearInterest = Number((this.previousYearInterestRate * lastYearBalance / 100).toFixed(2));
         const grandTotal = total + currentYearInterest + lastYearBalance + lastYearInterest
         this.account = {
           id: null,
@@ -149,8 +149,8 @@ export class AccountsComponent implements OnInit {
         fiscalYearId: fyId,
         month: i,
         monthName: this.monthName[i],
-        selfDeduction: this.employee.selfDeduction,
-        organizationalContribution: this.employee.organizationalContribution,
+        selfDeduction: Number(this.employee.selfDeduction.toFixed(2)),
+        organizationalContribution: Number(this.employee.organizationalContribution.toFixed(2)),
         advanceDeduction: 0,
         advanceReturn: 0,
         extraDeduction: 0
@@ -189,13 +189,24 @@ export class AccountsComponent implements OnInit {
     });
 
     this.account.currentYearBalance = this.account.lastYearBalance;
-    this.account.lastYearInterest = Number(Math.round(this.account.currentYearBalance * 13 / 100).toFixed(2));
+    this.account.lastYearInterest = this.calculateLastYearInterest();//Number((this.account.currentYearBalance * 13 / 100).toFixed(2));
     this.account.subTotal = this.getSubTotal(this.account.subAccountList);
     this.account.total = this.getTotal(this.account.subTotal);
-    console.log(this.employee.selfDeduction, this.employee.organizationalContribution, this.numberOfMonth, this.currentYearInterestRate)
-    this.account.currentYearInterest = Number(Math.round((this.employee.selfDeduction + this.employee.organizationalContribution) * (this.numberOfMonth + 1) * this.currentYearInterestRate / 200).toFixed(2));
-    this.account.grandTotal = Number(Math.round(this.account.total + this.account.currentYearInterest + this.account.lastYearBalance + this.account.lastYearInterest).toFixed(2));
+    this.account.currentYearInterest = Number(((this.employee.selfDeduction + this.employee.organizationalContribution) * (this.numberOfMonth + 1) * this.currentYearInterestRate / 200).toFixed(2));
+    this.account.grandTotal = Number((this.account.total + this.account.currentYearInterest + this.account.lastYearBalance + this.account.lastYearInterest).toFixed(2));
     this.account.currentLoanStatus = this.account.previousYearLoan - this.account.subTotal[2] + this.account.subTotal[3];
+  }
+
+  calculateLastYearInterest(): number {
+    let lastBalance = this.account.currentYearBalance;
+    let amount = 0;
+    this.account.subAccountList.forEach(sa => {
+      if (sa.advanceReturn > 0) {
+        lastBalance -= sa.advanceReturn;
+      }
+      amount += Number((lastBalance * this.previousYearInterestRate / 1200).toFixed(2));
+    })
+    return amount;
   }
 
   async save() {
@@ -224,6 +235,8 @@ export class AccountsComponent implements OnInit {
   }
 
   onCreateAdvance(event: Advance) {
+    this.showAdvanceForm = false;
+    // this.edit = false;
     let month = ((event.issueDate.month + 6) % 12) - 1;
     if (!this.account.advances) this.account.advances = [];
     this.account.advances.push(event);

@@ -17,10 +17,10 @@
                     <div ngbDropdown class="d-inline-block">
                         <a class="nav-link" id="addintion" ngbDropdownToggle> সংযোজন </a>
                         <div ngbDropdownMenu aria-labelledby="addintion">
-                            <a class="nav-link drop-link" (click)="toggleCollapse()" routerLink="/dashboard/zone">বিভাগ</a>
-                            <a class="nav-link drop-link" (click)="toggleCollapse()" routerLink="/dashboard/fiscal-year">অর্থবছর</a>
-                            <a class="nav-link drop-link" (click)="toggleCollapse()" routerLink="/dashboard/add-employee">কর্মকর্তা সংযোজন</a>
-                            <a class="nav-link drop-link" (click)="toggleCollapse()" routerLink="/dashboard/employee-list">কর্মকর্তা তালিকা</a>
+                            <a class="nav-link drop-link" (click)="toggleCollapse()" routerLink="/dashboard/zone" ngbDropdownItem>বিভাগ</a>
+                            <a class="nav-link drop-link" (click)="toggleCollapse()" routerLink="/dashboard/fiscal-year" ngbDropdownItem>অর্থবছর</a>
+                            <a class="nav-link drop-link" (click)="toggleCollapse()" routerLink="/dashboard/add-employee" ngbDropdownItem>কর্মকর্তা/কর্মচারী সংযোজন</a>
+                            <a class="nav-link drop-link" (click)="toggleCollapse()" routerLink="/dashboard/employee-list" ngbDropdownItem>কর্মকর্তা/কর্মচারী তালিকা</a>
                         </div>
                     </div>
                 </li>
@@ -31,8 +31,8 @@
                     <div ngbDropdown class="d-inline-block">
                         <a class="nav-link" id="report" ngbDropdownToggle> রিপোর্ট </a>
                         <div ngbDropdownMenu aria-labelledby="report">
-                            <a class="nav-link drop-link" (click)="toggleCollapse()" routerLink="/dashboard/all-report">সকল</a>
-                            <a class="nav-link drop-link" (click)="toggleCollapse()" routerLink="/dashboard/individual-report">স্বতন্ত্র</a>
+                            <a class="nav-link drop-link" (click)="toggleCollapse()" routerLink="/dashboard/all-report" ngbDropdownItem>সকল রিপোর্ট</a>
+                            <a class="nav-link drop-link" (click)="toggleCollapse()" routerLink="/dashboard/individual-report" ngbDropdownItem>স্বতন্ত্র রিপোর্ট</a>
                         </div>
                     </div>
                 </li>

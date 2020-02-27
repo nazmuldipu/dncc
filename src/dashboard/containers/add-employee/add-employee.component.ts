@@ -87,6 +87,7 @@ export class AddEmployeeComponent implements OnInit {
       .then(() => {
         this.sendingData = false;
         this.message = "কর্মকর্তা হালনাগাদ সম্পন্ন হয়েছে"
+        this.employee = null;
       })
       .catch((error) => {
         this.sendingData = false;
