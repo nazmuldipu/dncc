@@ -96,7 +96,9 @@ export class IndividualReportComponent implements OnInit {
     if (event != 'all') {
       this.fiscalYear = this.fiscalYearList.find(fy => fy.id == event);
     } else {
-      this.fiscalYear.id = 'all';
+      this.fiscalYear = null;
+
+      this.fiscalYear = { id: 'all' } as FiscalYear;
     }
     if (this.employee) {
       this.getEmployeeAccount(this.employee.id, event);
@@ -108,8 +110,11 @@ export class IndividualReportComponent implements OnInit {
     if (fyId == 'all') {
       await this.accountService.getByEmployeeId(empId).subscribe(data => {
         if (data.length) {
-          this.accountList = data;
-          data.forEach(dd => {
+          this.fiscalYearList.forEach(fyl => {
+            const value = data.find(d => d.fiscalYearId == fyl.id);
+            if (value) {
+              this.accountList.push(value);
+            }
           })
         } else {
           this.message = 'No account information yet';

@@ -120,7 +120,7 @@ export class AccountsComponent implements OnInit {
         const subTotal = this.getSubTotal(subAccountList);
         const total = this.getTotal(subTotal);
         const currentYearInterest = Number((this.currentYearInterestRate * total / 100).toFixed(2));
-        const lastYearBalance = 500;//TODO
+        const lastYearBalance = 0;//TODO
         const lastYearInterest = Number((this.previousYearInterestRate * lastYearBalance / 100).toFixed(2));
         const grandTotal = total + currentYearInterest + lastYearBalance + lastYearInterest
         this.account = {
@@ -169,13 +169,13 @@ export class AccountsComponent implements OnInit {
       advR += sba[i].advanceReturn;
       ext += sba[i].extraDeduction;
     }
-    const res: number[] = [self, org, advD, advR, ext];
+    const res: number[] = [Number(self.toFixed(2)), Number(org.toFixed(2)), Number(advD.toFixed(2)), Number(advR.toFixed(2)), Number(ext.toFixed(2))];
     return res;
   }
 
   getTotal(n: number[]): number {
     if (n.length == 5) {
-      return n[0] + n[1] + n[2] - n[3] + n[4];
+      return Number((n[0] + n[1] + n[2] - n[3] + n[4]).toFixed(2));
     }
     return 0;
   }
@@ -216,7 +216,7 @@ export class AccountsComponent implements OnInit {
       this.edit = false;
       this.exists = false;
       this.showAdvanceForm = false;
-    })
+    });
   }
 
   async update() {
@@ -226,7 +226,7 @@ export class AccountsComponent implements OnInit {
       this.edit = false;
       this.exists = false;
       this.showAdvanceForm = false;
-    })
+    });
   }
 
   onShowAdvanceForm() {
