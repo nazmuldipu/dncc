@@ -1,1 +1,134 @@
-<p>all-report works!</p>
+<div class="container-fluid mb-5">
+    <div class="row d-print-none bg-light shadow-sm">
+        <div class="col-md-2"></div>
+        <div class="form-inline">
+            <div class="form-group mb-2">
+                <label for="fiscalYear">অর্থবছর &nbsp;</label>
+                <select class="form-control" id="fiscalYear" (change)="onSelectFiscalYear($event.target.value)">
+                    <option value=""> অর্থবছর সিলেক্ট করুন </option>
+                    <option *ngFor="let fy of fiscalYearList" [value]="fy.id" [selected]="fy.active">
+                        {{ fy.name }}
+                    </option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div *ngFor="let account of accountList">
+        <hr>
+        <div class="form-group row mb-1">
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-md-1"></div>
+                    <label for="fiscalYear" class="col-md-5 col-form-label">{{getEmployeeIdAndName(account.employeeId)}}</label>
+                    <label for="fiscalYear" class="col-sm-2 col-form-label text-right">অর্থ বছর</label>
+                    <div class="col-sm-4">
+                        <label id="fiscalYear" class="form-control">{{fiscalYear.name}}</label>
+                    </div>
+                    <!-- <label for="fiscalYear" class="col-sm-2 col-form-label text-right">অঞ্চল/বিভাগ</label>
+                        <div class="col-sm-4">
+                            <label id="fiscalYear" class="form-control">{{employee.zone}}</label>
+                        </div> -->
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="row">
+                    <label for="fiscalYear" class="col-sm-3 col-form-label text-right">পূর্ববর্তী লোন</label>
+                    <div class="col-sm-3">
+                        <span class="form-control">{{account?.previousYearLoan}}</span>
+                    </div>
+                    <label for="fiscalYear" class="col-sm-3 col-form-label text-right">বর্তমান লোন</label>
+                    <div class="col-sm-3">
+                        <label class="form-control">{{account?.currentLoanStatus}}</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <td *ngFor="let n of serialNumber">{{n}}</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>মাসের নাম</td>
+                        <td *ngFor="let m of monthName">{{m}}</td>
+                        <td>উপমোট</td>
+                        <td>মোট</td>
+                        <td>চলতি সালের সুদ</td>
+                        <td>গত বছরের স্থিতি</td>
+                        <td>এই বছরের প্রারম্ভিক স্থিতি</td>
+                        <td>এই বছরের সুদ</td>
+                        <td>সমাপনী</td>
+                    </tr>
+                    <tr>
+                        <td>নিজ কর্তন</td>
+                        <td *ngFor="let sbl of account?.subAccountList; let i = index">
+                            <span>{{sbl.selfDeduction}}</span>
+                        </td>
+                        <td>{{account?.subTotal[0]}}</td>
+                        <td>{{account?.total}}</td>
+                        <td>{{account?.currentYearInterest}}</td>
+                        <td>{{account?.lastYearBalance}}</td>
+                        <td>{{account?.currentYearBalance}}</td>
+                        <td>{{account?.lastYearInterest}}</td>
+                        <td>{{account?.grandTotal}}</td>
+                    </tr>
+                    <tr>
+                        <td>কন্ট্রিবিউশন</td>
+                        <td *ngFor="let sbl of account?.subAccountList; let i = index">
+                            <span>{{sbl.organizationalContribution}}</span>
+                        </td>
+                        <td>{{account?.subTotal[1]}}</td>
+                        <td rowspan="4" colspan="6" *ngIf="account?.advances?.length" class="p-2">
+                            <h5 class="text-center">অগ্রিম প্রদানের বিবরণ</h5>
+                            <table class="table table-bordered ">
+                                <thead>
+                                    <tr>
+                                        <th>প্রদানের তারিখ</th>
+                                        <th>চেক নম্বর</th>
+                                        <th>অর্থের পরিমাণ</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let adv of account.advances">
+                                        <td>{{adv.issueDate.day}}/{{adv.issueDate.month}}/{{adv.issueDate.year}}/</td>
+                                        <td>{{adv.checkNumber}}</td>
+                                        <td>{{adv.amount}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>অগ্রিম কর্তন</td>
+                        <td *ngFor="let sbl of account?.subAccountList; let i = index">
+                            <span>{{sbl.advanceDeduction}}</span>
+                        </td>
+                        <td>{{account?.subTotal[2]}}</td>
+                    </tr>
+                    <tr>
+                        <td>অগ্রিম প্রদান</td>
+                        <td *ngFor="let sbl of account?.subAccountList; let i = index">
+                            <span>{{sbl.advanceReturn}}</span>
+                        </td>
+                        <td>{{account?.subTotal[3]}}</td>
+                    </tr>
+                    <tr>
+                        <td>অতিরিক্ত কর্তন</td>
+                        <td *ngFor="let sbl of account?.subAccountList; let i = index">
+                            <span>{{sbl.extraDeduction}}</span>
+                        </td>
+                        <td>{{account?.subTotal[4]}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div *ngIf="accountList.length">
+        <div class="d-flex flex-row-reverse bd-highlight d-print-none">
+            <button class="btn btn-sm btn-primary mx-1" (click)="onPrint()">Print</button>
+        </div>
+    </div>
+</div>

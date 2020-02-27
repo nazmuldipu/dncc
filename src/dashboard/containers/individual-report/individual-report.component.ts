@@ -109,6 +109,8 @@ export class IndividualReportComponent implements OnInit {
       await this.accountService.getByEmployeeId(empId).subscribe(data => {
         if (data.length) {
           this.accountList = data;
+          data.forEach(dd => {
+          })
         } else {
           this.message = 'No account information yet';
         }
@@ -116,12 +118,19 @@ export class IndividualReportComponent implements OnInit {
     } else {
       await this.accountService.getByEmployeeIdAndFiscalYearId(empId, fyId).subscribe(data => {
         if (data.length) {
+          data.forEach(dd => {
+          })
           this.accountList = data;
         } else {
           this.message = 'No account information yet';
         }
       });
     }
+  }
+
+  getFiscalyearName(id) {
+    const value = this.fiscalYearList.find(fy => fy.id == id);
+    return value ? value.name : '';
   }
 
   onPrint() {

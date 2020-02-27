@@ -56,6 +56,17 @@ export class AccountService {
         })));
   }
 
+  getByFiscalYearId(fiscalYearId): Observable<Accounts[]> {
+    return this.afs.collection(this.serviceUrl, ref =>
+      ref.where('fiscalYearId', '==', fiscalYearId)).snapshotChanges()
+      .pipe(
+        map(actions => actions.map(a => {
+          const data = a.payload.doc.data() as Accounts;
+          const id = a.payload.doc.id;
+          return { id, ...data };
+        })));
+  }
+
   getByEmployeeId(employeeId): Observable<Accounts[]> {
     return this.afs.collection(this.serviceUrl, ref =>
       ref.where('employeeId', '==', employeeId)).snapshotChanges()
