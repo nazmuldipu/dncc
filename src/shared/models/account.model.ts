@@ -15,7 +15,8 @@ export class Accounts {
     lastYearInterest: number;
     currentYearBalance: number;
     grandTotal: number;
-    advances: Advance[]
+    advances: Advance[];
+    closingAccount: ClosingAccount;
     constructor(
         id?: string,
         employeeId?: string,
@@ -36,5 +37,16 @@ export class Advance {
     issueDate: NgbDate;
     checkNumber: string;
     amount: number;
+}
+
+export class ClosingAccount {
+    accountNo: string;
+    nomineeName: string;
+    joiningDate: NgbDate;
+    retirementDate: NgbDate;
+    basicSalary: number;
+    providentFundInfo: Advance;
+    gratuityInfo: Advance;
+    oneTimePaymenInfo: Advance;
 }
 

@@ -153,10 +153,6 @@
                                 <input *ngIf="edit" type="number" class="form-control" [(ngModel)]="sbl.advanceDeduction" (keyup)="updateTotal()">
                             </td>
                             <td>{{account?.subTotal[2]}}</td>
-                            <!-- <td></td>
-                            <td>পূর্ববর্তী লোন</td>
-                            <td>বর্তমান লোন</td> -->
-
                         </tr>
                         <tr>
                             <td>অগ্রিম প্রদান</td>
@@ -178,16 +174,104 @@
             </div>
         </div>
 
+        <div class="col-md-12" *ngIf="account?.closingAccount">
+            <div class="container border">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group mb-0">
+                            <label>নথি নম্বরঃ {{account?.closingAccount?.accountNo}}</label>
+                        </div>
+
+                        <div class="form-group mb-0">
+                            <label>যোগদানের তারিখঃ {{account?.closingAccount?.joiningDate?.day}}/{{account?.closingAccount?.joiningDate?.month}}/{{account?.closingAccount?.joiningDate?.year}}</label>
+                        </div>
+
+                        <div class="form-group mb-0">
+                            <label>অবসর গ্রহনের তারিখঃ {{account?.closingAccount?.retirementDate?.day}}/{{account?.closingAccount?.retirementDate?.month}}/{{account?.closingAccount?.retirementDate?.year}}</label>
+                        </div>
+
+                        <div class="form-group mb-0">
+                            <label>নমিনীর নামঃ {{account?.closingAccount?.nomineeName}}</label>
+                        </div>
+
+                        <div class="form-group mb-0">
+                            <label>মূল বেতনঃ {{account?.closingAccount?.basicSalary}}</label>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="row border">
+                            <label class="col-12 m-0">
+                                <h5 class="mb-0">প্রভিডেন্ট ফান্ড টাকা</h5>
+                            </label>
+                            <div class="col-12 mb-1">
+                                <div class="form-row">
+                                    <div class="col">
+                                        <label class="mb-0">প্রদানের তারিখঃ {{account?.closingAccount?.providentFundInfo?.issueDate?.day}}/{{account?.closingAccount?.providentFundInfo?.issueDate?.month}}/{{account?.closingAccount?.providentFundInfo?.issueDate?.year}}</label>
+                                    </div>
+                                    <div class="col">
+                                        <label class="mb-0">চেক নম্বরঃ {{account?.closingAccount?.providentFundInfo?.checkNumber}}</label>
+                                    </div>
+                                    <div class="col">
+                                        <label class="mb-0">অর্থের পরিমাণঃ {{account?.closingAccount?.providentFundInfo?.amount}}</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row border">
+                            <label class="col-12 m-0">
+                                <h5 class="mb-0">গ্র্যাচুয়িটি টাকা</h5>
+                            </label>
+                            <div class="col-12 mb-1">
+                                <div class="form-row">
+                                    <div class="col">
+                                        <label class="mb-0">প্রদানের তারিখঃ {{account?.closingAccount?.gratuityInfo?.issueDate?.day}}/{{account?.closingAccount?.gratuityInfo?.issueDate?.month}}/{{account?.closingAccount?.gratuityInfo?.issueDate?.year}}</label>
+                                    </div>
+                                    <div class="col">
+                                        <label class="mb-0">চেক নম্বরঃ {{account?.closingAccount?.gratuityInfo?.checkNumber}}</label>
+                                    </div>
+                                    <div class="col">
+                                        <label class="mb-0">অর্থের পরিমাণঃ {{account?.closingAccount?.gratuityInfo?.amount}}</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row border">
+                            <label class="col-12 m-0">
+                                <h5 class="mb-0">১৮ মাসের এককালীন টাকা</h5>
+                            </label>
+                            <div class="col-12 mb-1">
+                                <div class="form-row">
+                                    <div class="col">
+                                        <label class="mb-0">প্রদানের তারিখঃ {{account?.closingAccount?.oneTimePaymenInfo?.issueDate?.day}}/{{account?.closingAccount?.oneTimePaymenInfo?.issueDate?.month}}/{{account?.closingAccount?.oneTimePaymenInfo?.issueDate?.year}}</label>
+                                    </div>
+                                    <div class="col">
+                                        <label class="mb-0">চেক নম্বরঃ {{account?.closingAccount?.oneTimePaymenInfo?.checkNumber}}</label>
+                                    </div>
+                                    <div class="col">
+                                        <label class="mb-0">অর্থের পরিমাণঃ {{account?.closingAccount?.oneTimePaymenInfo?.amount}}</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="col-md-12" *ngIf="showAdvanceForm">
             <advance-form (create)="onCreateAdvance($event)"></advance-form>
         </div>
-        <div class="col-md-12" *ngIf="account">
+        <div class="col-md-12" *ngIf="showColosingForm">
+            <closing-form (create)="onCreateClosingAccount($event)" [closingAccount]="account?.closingAccount"></closing-form>
+        </div>
+        <div class="col-md-12 mt-2 mb-5" *ngIf="account">
             <div class="d-flex flex-row-reverse bd-highlight">
                 <!-- <button class="btn btn-sm btn-primary mx-1">Print</button> -->
                 <button class="btn btn-sm btn-warning mx-1" *ngIf="!edit" (click)="edit=true">এডিট করুন</button>
                 <button class="btn btn-sm btn-success mx-1" *ngIf="edit && !exists" (click)="save()">সংরক্ষণ করুন</button>
                 <button class="btn btn-sm btn-warning mx-1" *ngIf="edit && exists" (click)="update()">হালনাগাদ করুন</button>
-                <button class="btn btn-sm btn-success mx-1" (click)="onShowAdvanceForm()">অগ্রিম প্রদান করুন</button>
+                <button class="btn btn-sm btn-success mx-1" *ngIf="edit" (click)="onShowAdvanceForm()">অগ্রিম প্রদান করুন</button>
+                <button class="btn btn-sm btn-success mx-1" *ngIf="edit" (click)="onCloseAccount()">অ্যাকাউন্ট বন্ধ ফর্ম</button>
             </div>
         </div>
     </div>

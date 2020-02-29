@@ -1,0 +1,162 @@
+<div class="container mt-4 shadow-sm p-3">
+    <form [formGroup]="form" (ngSubmit)="submit()">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group mb-0">
+                    <label for="accountNo">নথি নম্বর*</label>
+                    <input type="text" class="form-control" id="accountNo" placeholder="নথি নম্বর" formControlName="accountNo">
+                    <small class="text-danger" *ngIf="form.controls.accountNo.errors && form.controls.accountNo.touched">
+                        নথি নম্বর প্রয়োজন
+                    </small>
+                </div>
+
+                <div class="form-group mb-0">
+                    <label for="joiningDate">যোগদানের তারিখ</label>
+                    <div class="input-group">
+                        <input class="form-control" placeholder="yyyy-mm-dd" [minDate]="minDate" [maxDate]="maxDate" name="joiningDate" id="joiningDate"
+                            formControlName="joiningDate" ngbDatepicker #jd="ngbDatepicker" (click)="jd.toggle()">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary calendar" (click)="jd.toggle()" type="button">
+                                <i class="fa fa-calendar"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group mb-0">
+                    <label for="retirementDate">অবসর গ্রহনের তারিখ</label>
+                    <div class="input-group">
+                        <input class="form-control" placeholder="yyyy-mm-dd" [minDate]="minDate" [maxDate]="maxDate" name="retirementDate" id="retirementDate"
+                            formControlName="retirementDate" ngbDatepicker #retD="ngbDatepicker" (click)="retD.toggle()">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary calendar" (click)="retD.toggle()" type="button">
+                                <i class="fa fa-calendar"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group mb-0">
+                    <label for="nomineeName">নমিনীর নাম</label>
+                    <input type="text" class="form-control" id="nomineeName" placeholder="নমিনীর নাম" formControlName="nomineeName">
+                    <small class="text-danger" *ngIf="form.controls.nomineeName.errors && form.controls.nomineeName.touched">
+                        নমিনীর নাম প্রয়োজন
+                    </small>
+                </div>
+
+                <div class="form-group mb-0">
+                    <label for="basicSalary">মূল বেতন</label>
+                    <input type="number" class="form-control" id="basicSalary" placeholder="মূল বেতন" formControlName="basicSalary">
+                    <small class="text-danger" *ngIf="form.controls.basicSalary.errors && form.controls.basicSalary.touched">
+                        মূল বেতন প্রয়োজন
+                    </small>
+                </div>
+
+            </div>
+            <div class="col-md-8">
+                <div class="row border" formGroupName="providentFundInfo">
+                    <label class="col-12 m-0 mt-2">
+                        <h5>প্রভিডেন্ট ফান্ড টাকা</h5>
+                    </label>
+                    <div class="col-12 mb-2">
+                        <div class="form-row">
+                            <div class="col">
+                                <label for="issueDate1">প্রদানের তারিখ</label>
+                                <div class="input-group">
+                                    <input class="form-control" placeholder="yyyy-mm-dd" [minDate]="minDate" [maxDate]="maxDate" name="issueDate" id="issueDate1"
+                                        formControlName="issueDate" ngbDatepicker #dd1="ngbDatepicker" (click)="dd1.toggle()">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-secondary calendar" (click)="dd1.toggle()" type="button">
+                                            <i class="fa fa-calendar"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <label for="checkNumber1">চেক নম্বর</label>
+                                <input type="text" class="form-control" id="checkNumber1" placeholder="চেক নম্বর" formControlName="checkNumber">
+                                <!-- <small class="text-danger" *ngIf="form.controls.providentFundInfo.controls.checkNumber.errors && form.controls.providentFundInfo.controls.checkNumber.touched">
+                                    চেক নম্বর প্রয়োজন
+                                </small> -->
+                            </div>
+                            <div class="col">
+                                <label for="validationCustomUsername">অর্থের পরিমাণ</label>
+                                <input type="number" class="form-control" id="amount" placeholder="অর্থ পরিমাণ" formControlName="amount">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row border" formGroupName="gratuityInfo">
+                    <label class="col-12 m-0 mt-2">
+                        <h5>গ্র্যাচুয়িটি টাকা</h5>
+                    </label>
+                    <div class="col-12 mb-2">
+                        <div class="form-row">
+                            <div class="col">
+                                <label for="issueDate2">প্রদানের তারিখ</label>
+                                <div class="input-group">
+                                    <input class="form-control" placeholder="yyyy-mm-dd" [minDate]="minDate" [maxDate]="maxDate" name="issueDate" id="issueDate2"
+                                        formControlName="issueDate" ngbDatepicker #dd2="ngbDatepicker" (click)="dd2.toggle()">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-secondary calendar" (click)="dd2.toggle()" type="button">
+                                            <i class="fa fa-calendar"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <label for="checkNumber2">চেক নম্বর</label>
+                                <input type="text" class="form-control" id="checkNumber2" placeholder="চেক নম্বর" formControlName="checkNumber">
+                                <!-- <small class="text-danger" *ngIf="form.controls.providentFundInfo.controls.checkNumber.errors && form.controls.providentFundInfo.controls.checkNumber.touched">
+                                        চেক নম্বর প্রয়োজন
+                                    </small> -->
+                            </div>
+                            <div class="col">
+                                <label for="validationCustomUsername">অর্থের পরিমাণ</label>
+                                <input type="number" class="form-control" id="amount2" placeholder="অর্থ পরিমাণ" formControlName="amount">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row border" formGroupName="oneTimePaymenInfo">
+                    <label class="col-12 m-0 mt-2">
+                        <h5>১৮ মাসের এককালীন টাকা</h5>
+                    </label>
+                    <div class="col-12 mb-2">
+                        <div class="form-row">
+                            <div class="col">
+                                <label for="issueDate2">প্রদানের তারিখ</label>
+                                <div class="input-group">
+                                    <input class="form-control" placeholder="yyyy-mm-dd" [minDate]="minDate" [maxDate]="maxDate" name="issueDate" id="issueDate3"
+                                        formControlName="issueDate" ngbDatepicker #dd3="ngbDatepicker" (click)="dd3.toggle()">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-secondary calendar" (click)="dd3.toggle()" type="button">
+                                            <i class="fa fa-calendar"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <label for="checkNumber2">চেক নম্বর</label>
+                                <input type="text" class="form-control" id="checkNumber3" placeholder="চেক নম্বর" formControlName="checkNumber">
+                                <!-- <small class="text-danger" *ngIf="form.controls.providentFundInfo.controls.checkNumber.errors && form.controls.providentFundInfo.controls.checkNumber.touched">
+                                            চেক নম্বর প্রয়োজন
+                                        </small> -->
+                            </div>
+                            <div class="col">
+                                <label for="validationCustomUsername">অর্থের পরিমাণ</label>
+                                <input type="number" class="form-control" id="amount3" placeholder="অর্থ পরিমাণ" formControlName="amount">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex flex-row-reverse bd-highlight mt-2">
+            <button type="submit" class="btn btn-success">
+                সংরক্ষণ করুন
+            </button>
+        </div>
+
+    </form>
+</div>

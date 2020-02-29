@@ -5,7 +5,7 @@ import { Employee } from 'src/shared/models/employee.model';
 import { FiscalYearService } from 'src/services/fiscal-year.service';
 import { FiscalYear } from 'src/shared/models/fiscal-year.model';
 import { AccountService } from 'src/services/account.service';
-import { Accounts, Advance } from 'src/shared/models/account.model';
+import { Accounts, Advance, ClosingAccount } from 'src/shared/models/account.model';
 import { SubAccount } from 'src/shared/models/sub-account.model';
 import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, filter } from 'rxjs/operators';
@@ -19,6 +19,7 @@ export class AccountsComponent implements OnInit {
   edit = false;
   exists = false;
   showAdvanceForm = false;
+  showColosingForm = false;
   currentYearInterestRate = 13;
   previousYearInterestRate = 13;
   monthlySubscription;
@@ -215,6 +216,7 @@ export class AccountsComponent implements OnInit {
       this.employee = null;
       this.edit = false;
       this.exists = false;
+      this.showColosingForm = false;
       this.showAdvanceForm = false;
     });
   }
@@ -225,22 +227,40 @@ export class AccountsComponent implements OnInit {
       this.employee = null;
       this.edit = false;
       this.exists = false;
+      this.showColosingForm = false;
       this.showAdvanceForm = false;
     });
   }
 
   onShowAdvanceForm() {
     this.showAdvanceForm = true;
+    this.showColosingForm = false;
+    this.edit = true;
+  }
+
+  onCloseAccount() {
+    this.showColosingForm = true;
+    this.showAdvanceForm = false;
     this.edit = true;
   }
 
   onCreateAdvance(event: Advance) {
     this.showAdvanceForm = false;
-    // this.edit = false;
     let month = ((event.issueDate.month + 6) % 12) - 1;
     if (!this.account.advances) this.account.advances = [];
     this.account.advances.push(event);
     this.account.subAccountList[month].advanceReturn = event.amount;
     this.updateTotal();
+  }
+
+  async onCreateClosingAccount(event: ClosingAccount) {
+    this.account.closingAccount = event;
+    this.showColosingForm = false;
+    console.log(this.account.closingAccount);
+    await this.accountService.update(this.account.id, this.account).then(() => {
+      this.edit = false;
+      this.showColosingForm = false;
+      this.showAdvanceForm = false;
+    });
   }
 }
